@@ -1,0 +1,41 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# Build Results
+bin/
+obj/
+AppPackages/
+GeneratedFiles/
+ipch/
+_ReSharper*/
+*.dbmdl
+*.bak
+
+# MAUI / Xamarin
+*.apk
+*.aab
+*.apks
+*.xcuserstate
+*.xcuserdatad
+*.tlog
+*.ide
+*.cache
+
+# User-specific Files
+*.userprefs
+*.userosscache
+*.sln.docstates
+
+# Logs
+*.log
+
+# Packaging artifacts
+*.msix
+*.msixbundle
+*.appinstaller
+
+# Images generated
+/Platforms/Windows/Images/Assets/*.png
+!README.md
