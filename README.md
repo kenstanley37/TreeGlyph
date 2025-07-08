@@ -35,16 +35,11 @@ Pull requests and feature suggestions are welcome. Let’s grow this tree togeth
 
 ---
 
-Let me know if you want me to generate a `CONTRIBUTING.md`, add badges (like build status or Store link), or scaffold sample screenshots dynamically. This repo is now ready to branch out 🍃🔧📁
-
-
-
 
 ## 📦 Installation
 
 To build from source:
 
-```bash
 git clone https://github.com/YourCompany/TreeGlyph.git
 cd TreeGlyph
 dotnet build -t:Run
