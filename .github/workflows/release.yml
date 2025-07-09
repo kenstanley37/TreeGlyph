@@ -5,7 +5,7 @@ on:
     tags:
       - 'v[0-9]+.[0-9]+.[0-9]+'  # Matches tags like v1.0.0, v2.1.5
       - 'v[0-9]+.[0-9]+'         # Matches tags like v1.0, v2.1
-  workflow_dispatch:            # Allows manual trigger from GitHub UI
+  workflow_dispatch:            # Manual trigger for testing
 
 jobs:
   build:
@@ -18,7 +18,7 @@ jobs:
       - name: ⚙️ Setup .NET SDK
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: "9.0.x"  # Adjust if TreeGlyph targets .NET 8
+          dotnet-version: "9.0.x"  # Adjust if targeting a different version
 
       - name: 📜 Build TreeGlyph.Console with Logs
         run: dotnet build TreeGlyph.Console/TreeGlyph.Console.csproj -c Release --verbosity detailed > build-log.txt
@@ -42,15 +42,20 @@ jobs:
         run: choco install innosetup --yes --no-progress
         shell: powershell
 
-      - name: 📦 Run Inno Setup
+      - name: 📦 Run Inno Setup with Diagnostic Log
         run: |
-            echo "Current directory:"
-            cd
-            echo "Contents of TreeGlyph.Console:"
-            dir TreeGlyph.Console
-            "C:\\Program Files (x86)\\Inno Setup 6\\ISCC.exe" TreeGlyph.Console\\TreeGlyphSetup.iss
+          echo Current Directory:
+          cd
+          echo Contents of TreeGlyph.Console:
+          dir TreeGlyph.Console
+          "C:\\Program Files (x86)\\Inno Setup 6\\ISCC.exe" TreeGlyph.Console\\TreeGlyphSetup.iss > inno-log.txt
         shell: cmd
 
+      - name: 📤 Upload Inno Setup Log
+        uses: actions/upload-artifact@v4
+        with:
+          name: Inno Setup Log
+          path: inno-log.txt
 
       - name: 🚀 Upload Release Asset
         uses: softprops/action-gh-release@v1
