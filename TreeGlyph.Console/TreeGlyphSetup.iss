@@ -1,5 +1,8 @@
 [Setup]
 AppName=TreeGlyph CLI
+VersionInfoCompany=StanleySoft
+VersionInfoDescription=TreeGlyph CLI Utility
+VersionInfoVersion=1.0.0.0
 AppVersion=1.0
 DefaultDirName={pf}\TreeGlyph
 DefaultGroupName=TreeGlyph
@@ -8,7 +11,7 @@ Compression=lzma
 SolidCompression=yes
 
 [Files]
-Source: "treeglyph.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "bin\Release\net9.0\win-x64\publish\treeglyph.exe"; DestDir: "{app}"; Flags: ignoreversion
 
 [Icons]
 Name: "{group}\TreeGlyph CLI"; Filename: "{app}\treeglyph.exe"
