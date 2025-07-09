@@ -8,7 +8,7 @@ Thanks for your interest in contributing to TreeGlyph! We welcome ideas, bug fix
 
 1. Fork the repo and clone your copy:
    ```bash
-   git clone https://github.com/YourUsername/TreeGlyph.git
+   git clone https://github.com/kenstanley37/TreeGlyph
    cd TreeGlyph
    ```bash
 

@@ -1,4 +1,5 @@
 ﻿using TreeGlyph.UI.ViewModels;
+using TreeGlyph.UI.Views;
 
 namespace TreeGlyph.UI;
 
@@ -13,5 +14,11 @@ public partial class MainPage : ContentPage
 #if WINDOWS
 #endif
     }
+
+    private async void OnAboutClicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync(nameof(AboutPage));
+    }
+
 
 }

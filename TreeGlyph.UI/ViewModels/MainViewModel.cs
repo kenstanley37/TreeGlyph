@@ -3,8 +3,10 @@ using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Diagnostics;
+using System.Windows.Input;
 using TreeGlyph.UI.Helpers;
 using TreeGlyph.UI.Services;
+using TreeGlyph.UI.Views;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using WinRT.Interop;
@@ -144,6 +146,13 @@ public partial class MainViewModel : ObservableObject
                 Preferences.Set(nameof(AutoSaveIgnoreFile), value);
         }
     }
+    public ICommand ShowAboutCommand => new AsyncRelayCommand(ExecuteShowAbout);
+
+    private async Task ExecuteShowAbout()
+    {
+        await Shell.Current.GoToAsync(nameof(AboutPage)); // or PushAsync depending on your nav setup
+    }
+
 
     // Derived property
     public bool HasSelectedFolder => !string.IsNullOrWhiteSpace(SelectedFolderPath);
