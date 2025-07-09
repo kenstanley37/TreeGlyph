@@ -18,7 +18,7 @@ jobs:
       - name: ⚙️ Setup .NET SDK
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: "9.0.x"  # Adjust if targeting a different version
+          dotnet-version: "9.0.x"
 
       - name: 📜 Build TreeGlyph.Console with Logs
         run: dotnet build TreeGlyph.Console/TreeGlyph.Console.csproj -c Release --verbosity detailed > build-log.txt
@@ -42,13 +42,13 @@ jobs:
         run: choco install innosetup --yes --no-progress
         shell: powershell
 
-      - name: 📦 Run Inno Setup with Diagnostic Log
+      - name: 📦 Run Inno Setup with Logging
         run: |
           echo Current Directory:
           cd
           echo Contents of TreeGlyph.Console:
           dir TreeGlyph.Console
-          "C:\\Program Files (x86)\\Inno Setup 6\\ISCC.exe" TreeGlyph.Console\\TreeGlyphSetup.iss > inno-log.txt
+          "C:\\Program Files (x86)\\Inno Setup 6\\ISCC.exe" TreeGlyph.Console\\TreeGlyphSetup.iss > inno-log.txt 2>&1
         shell: cmd
 
       - name: 📤 Upload Inno Setup Log
