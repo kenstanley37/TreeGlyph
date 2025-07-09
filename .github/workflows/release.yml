@@ -3,13 +3,11 @@ name: Build and Release TreeGlyph
 on:
   push:
     tags:
-      - 'v*'
-      workflow_dispatch:
+      - "v*"
 
 jobs:
   build:
     runs-on: windows-latest
-
     steps:
       - name: ⬇️ Checkout repository
         uses: actions/checkout@v3
@@ -17,7 +15,7 @@ jobs:
       - name: ⚙️ Setup .NET SDK
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: '9.0.x'
+          dotnet-version: "9.0.x"
 
       - name: 🛠️ Publish TreeGlyph.Console
         run: dotnet publish TreeGlyph.Console/TreeGlyph.Console.csproj -c Release -r win-x64 --self-contained -p:PublishSingleFile=true
