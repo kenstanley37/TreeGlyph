@@ -4,11 +4,13 @@ on:
   push:
     tags:
       - 'v[0-9]+.[0-9]+.[0-9]+' # Matches tags like v1.0.0, v2.1.5
-      - 'v[0-9]+.[0-9]+' # Matches tags like v1.0, v2.1
+      - 'v[0-9]+.[0-9]+'        # Matches tags like v1.0, v2.1
+  workflow_dispatch:           # Optional manual trigger
 
 jobs:
   build:
     runs-on: windows-latest
+
     steps:
       - name: ⬇️ Checkout repository
         uses: actions/checkout@v3
@@ -31,7 +33,7 @@ jobs:
         with:
           name: TreeGlyph ${{ github.ref_name }}
           tag_name: ${{ github.ref_name }}
+          files: |
+            Output/TreeGlyphSetup.exe
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        files: |
-          Output/TreeGlyphSetup.exe
