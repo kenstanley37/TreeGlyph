@@ -20,9 +20,8 @@ jobs:
         with:
           dotnet-version: "9.0.x"  # Adjust if TreeGlyph targets .NET 8
 
-      - name: 🔧 Build TreeGlyph.Console with Logs
+      - name: 📜 Build TreeGlyph.Console with Logs
         run: dotnet build TreeGlyph.Console/TreeGlyph.Console.csproj -c Release --verbosity detailed > build-log.txt
-        continue-on-error: true
 
       - name: 📤 Upload Build Log
         uses: actions/upload-artifact@v4
@@ -30,8 +29,18 @@ jobs:
           name: Build Logs
           path: build-log.txt
 
-      - name: 🛠️ Publish TreeGlyph.Console
-        run: dotnet publish TreeGlyph.Console/TreeGlyph.Console.csproj -c Release -r win-x64 --self-contained -p:PublishSingleFile=true
+      - name: 📜 Publish TreeGlyph.Console with Logs
+        run: dotnet publish TreeGlyph.Console/TreeGlyph.Console.csproj -c Release -r win-x64 --self-contained -p:PublishSingleFile=true --verbosity detailed > publish-log.txt
+
+      - name: 📤 Upload Publish Log
+        uses: actions/upload-artifact@v4
+        with:
+          name: Publish Logs
+          path: publish-log.txt
+
+      - name: 📥 Install Inno Setup via Chocolatey
+        run: choco install innosetup --yes --no-progress
+        shell: powershell
 
       - name: 📦 Run Inno Setup
         run: |
