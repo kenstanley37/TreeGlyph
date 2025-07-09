@@ -42,10 +42,11 @@ jobs:
         run: choco install innosetup --yes --no-progress
         shell: powershell
 
-      - name: 📦 Run Inno Setup
-        run: |
-          iscc.exe TreeGlyphSetup.iss
-        shell: cmd
+      - name: 📦 Run Inno Setup (with directory check)
+          run: |
+            dir TreeGlyph.Console
+            iscc.exe TreeGlyph.Console\\TreeGlyphSetup.iss
+          shell: cmd
 
       - name: 🚀 Upload Release Asset
         uses: softprops/action-gh-release@v1
