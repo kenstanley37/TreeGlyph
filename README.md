@@ -1,46 +1,66 @@
-
-```markdown
-![.NET MAUI](https://img.shields.io/badge/.NET%20MAUI-Windows-blueviolet)
-![License](https://img.shields.io/badge/license-MIT-brightgreen)
-![Build](https://img.shields.io/badge/status-Polished-success)
-
 # 🌲 TreeGlyph
 
-TreeGlyph is a Windows-native file structure visualizer that generates ASCII-style directory trees — perfect for developers, writers, or anyone who needs a clean look at folder contents.
-
-![TreeGlyph Preview](StoreMockup.png)
+**TreeGlyph** is a fast, user-friendly utility for visualizing folder structures — with both a native .NET MAUI desktop UI and a powerful CLI tool. Exclude folders using `.treeglyphignore`, copy trees to clipboard, save as text, or just enjoy the visual clarity.
 
 ---
 
-## ✨ Features
+## 🖥️ Desktop UI Preview
 
-- 📁 Generate directory trees with `.gitignore`-style exclusions
-- 🌐 Save output as ASCII or `.gitignore` files
-- 🪟 Built with .NET MAUI for desktop-class layout and responsiveness
-- 🖱️ Custom splitter control with smooth resizing and copy-ready previews
+Explore and inspect directories with a responsive, desktop-native interface:
 
----
-
-🛠 Technologies
-- .NET MAUI (.NET 9)
-- MVVM (CommunityToolkit)
-- Windows App SDK
-- Custom controls (HorizontalSplitterView)
-
-📝 License
-MIT License — use freely, credit appreciated.
-
-💬 Feedback or Ideas?
-Pull requests and feature suggestions are welcome. Let’s grow this tree together 🌳
+![TreeGlyph UI](assets/treeglyph-ui.gif)
 
 ---
 
+## 🧮 Command Line Output
 
-## 📦 Installation
+Render nested folder structures in your terminal with clean ASCII formatting:
 
-To build from source:
+![TreeGlyph Console](assets/treeglyph-console.gif)
 
-git clone https://github.com/YourCompany/TreeGlyph.git
-cd TreeGlyph
-dotnet build -t:Run
+```bash
+treeglyph src bin,obj,node_modules --depth 2 --clipboard
 
+
+TreeGlyph CLI
+
+📦 Installer
+TreeGlyph comes with a Windows installer that lets you:
+- Choose install location
+- Automatically add TreeGlyph to your system PATH
+- Add Start Menu shortcuts
+TreeGlyph Installer
+
+🚀 Installation
+- Download TreeGlyphSetup.exe from Releases
+- Run the installer — accept default or choose custom path
+- Launch via Start Menu or open terminal and type:
+treeglyph
+
+
+You can also use dotnet tool install --global treeglyph if published to NuGet.
+
+
+🔧 CLI Options
+| Option | Description | 
+| --depth [n] | Limit nesting depth | 
+| --save [path] | Save output to a file | 
+| --clipboard | Copy output to clipboard | 
+| --noglobal | Skip applying global ignore rules | 
+| --setglobal [r] | Overwrite global ignore file (comma-separated rules) | 
+| --editglobal | Open global ignore file in text editor | 
+| --help | Show command line help | 
+
+
+
+📁 Ignore Rules
+- .treeglyphignore in the target folder
+- ignore-global.txt stored in %AppData%\TreeGlyph
+- Inline exclusions passed via CLI:
+treeglyph src bin,obj,temp --noglobal
+
+
+
+📘 License
+MIT License
+© Kenneth Stanley
