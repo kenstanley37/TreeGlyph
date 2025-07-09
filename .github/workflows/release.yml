@@ -1,0 +1,37 @@
+name: Build and Release TreeGlyph
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: ⬇️ Checkout repository
+        uses: actions/checkout@v3
+
+      - name: ⚙️ Setup .NET SDK
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: 🛠️ Publish TreeGlyph.Console
+        run: dotnet publish TreeGlyph.Console/TreeGlyph.Console.csproj -c Release -r win-x64 --self-contained -p:PublishSingleFile=true
+
+      - name: 📦 Run Inno Setup
+        run: |
+          iscc.exe TreeGlyphSetup.iss
+        shell: cmd
+
+      - name: 🚀 Upload release asset
+        uses: softprops/action-gh-release@v1
+        with:
+          name: TreeGlyph ${{ github.ref_name }}
+          tag_name: ${{ github.ref_name }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        files: |
+          Output/TreeGlyphSetup.exe
