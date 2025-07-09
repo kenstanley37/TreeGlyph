@@ -1,4 +1,4 @@
-﻿namespace TreeGlyph.UI.Models;
+﻿namespace TreeGlyph.Core.Models;
 
 public class FileSystemEntry
 {

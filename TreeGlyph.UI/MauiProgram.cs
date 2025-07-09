@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using TreeGlyph.UI;
+using TreeGlyph.Core.Services;
 using TreeGlyph.UI.Services;
 using TreeGlyph.UI.ViewModels;
 using CommunityToolkit.Maui;

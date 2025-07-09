@@ -28,101 +28,101 @@
               HorizontalOptions="Fill"
               ColumnDefinitions="Auto,*,Auto">
 
-            <!-- 🔧 Left-Aligned Buttons + Auto-Save -->
+            <!-- 🔧 Navigation Buttons -->
             <HorizontalStackLayout Grid.Column="0" Spacing="6" VerticalOptions="Center">
-                <Button Text="Browse"
-                        Command="{Binding BrowseFolderCommand}"
-                        Style="{StaticResource NavButtonStyle}" />
+                <Button Text="Browse" Command="{Binding BrowseFolderCommand}" Style="{StaticResource NavButtonStyle}" />
+                <Button Text="Generate" Command="{Binding GenerateTreeCommand}" Style="{StaticResource NavButtonStyle}" IsEnabled="{Binding HasSelectedFolder}" />
+                <Button Text="Save ASCII" Command="{Binding SaveTreeCommand}" Style="{StaticResource NavButtonStyle}" IsEnabled="{Binding HasSelectedFolder}" />
+                <Button Text="Clear" Command="{Binding ClearTreeCommand}" Style="{StaticResource NavButtonStyle}" IsEnabled="{Binding HasSelectedFolder}" />
+                <Button Text="Save Ignore" Command="{Binding SaveIgnoreFileCommand}" Style="{StaticResource NavButtonStyle}" IsEnabled="{Binding HasSelectedFolder}" />
 
-                <Button Text="Generate"
-                        Command="{Binding GenerateTreeCommand}"
-                        Style="{StaticResource NavButtonStyle}"
-                        IsEnabled="{Binding HasSelectedFolder}" />
-
-                <Button Text="Save ASCII"
-                        Command="{Binding SaveTreeCommand}"
-                        Style="{StaticResource NavButtonStyle}"
-                        IsEnabled="{Binding HasSelectedFolder}" />
-
-                <Button Text="Clear"
-                        Command="{Binding ClearTreeCommand}"
-                        Style="{StaticResource NavButtonStyle}"
-                        IsEnabled="{Binding HasSelectedFolder}" />
-
-                <Button Text="Save Ignore"
-                        Command="{Binding SaveIgnoreFileCommand}"
-                        Style="{StaticResource NavButtonStyle}"
-                        IsEnabled="{Binding HasSelectedFolder}" />
-
-                <!-- 🧠 Auto-Save Switch Inline -->
+                <!-- 🧠 Auto-Save Toggle -->
                 <HorizontalStackLayout VerticalOptions="Center" Spacing="6">
-                    <Label Text="Auto-Save"
-                           FontSize="12"
-                           VerticalOptions="Center"
-                           TextColor="{AppThemeBinding Light=Black, Dark=White}"
-                           Opacity="{Binding HasSelectedFolder, Converter={StaticResource BoolToOpacityConverter}}" />
-
-                    <Switch IsToggled="{Binding AutoSaveIgnoreFile}"
-                            IsEnabled="{Binding HasSelectedFolder}"
-                            OnColor="{AppThemeBinding Light=#4caf50, Dark=#80e27e}"
-                            ThumbColor="{AppThemeBinding Light=White, Dark=LightGray}"
-                            VerticalOptions="Center" />
+                    <Label Text="Auto-Save" FontSize="12" VerticalOptions="Center" TextColor="{AppThemeBinding Light=Black, Dark=White}" Opacity="{Binding HasSelectedFolder, Converter={StaticResource BoolToOpacityConverter}}" />
+                    <Switch IsToggled="{Binding AutoSaveIgnoreFile}" IsEnabled="{Binding HasSelectedFolder}" OnColor="{AppThemeBinding Light=#4caf50, Dark=#80e27e}" ThumbColor="{AppThemeBinding Light=White, Dark=LightGray}" VerticalOptions="Center" />
                 </HorizontalStackLayout>
             </HorizontalStackLayout>
 
-            <!-- 🌲 About Button Far Right -->
-            <HorizontalStackLayout Grid.Column="2" Spacing="6" VerticalOptions="Center" HorizontalOptions="End">
-                <Button Text="About"
-                        Command="{Binding ShowAboutCommand}"
-                        Style="{StaticResource NavButtonStyle}" />
+            <!-- 📖 About -->
+            <HorizontalStackLayout Grid.Column="2" HorizontalOptions="End" VerticalOptions="Center">
+                <Button Text="About" Command="{Binding ShowAboutCommand}" Style="{StaticResource NavButtonStyle}" />
             </HorizontalStackLayout>
         </Grid>
 
-        <!-- 📁 Folder Path -->
+        <!-- 📁 Selected Folder Path -->
         <VerticalStackLayout Grid.Row="1" Spacing="6">
             <Label Text="Selected Folder:" FontAttributes="Bold" />
             <Label Text="{Binding SelectedFolderPath}" LineBreakMode="WordWrap" />
         </VerticalStackLayout>
 
         <!-- 🔀 Split Layout -->
-        <controls:HorizontalSplitterView
-            Grid.Row="2"
-            Panel1Width="{Binding LeftPanelWidth, Mode=TwoWay}"
-            MinWidth="240"
-            MaxWidth="640"
-            VerticalOptions="Fill"
-            HorizontalOptions="Fill">
+        <controls:HorizontalSplitterView Grid.Row="2"
+                                         Panel1Width="{Binding LeftPanelWidth, Mode=TwoWay}"
+                                         MinWidth="240"
+                                         MaxWidth="640"
+                                         VerticalOptions="Fill"
+                                         HorizontalOptions="Fill">
 
-            <!-- Left Panel -->
+            <!-- 📄 Left Panel: Exclude Rules -->
             <controls:HorizontalSplitterView.Panel1Content>
                 <VerticalStackLayout Padding="12" Spacing="8">
                     <Label Text="Exclude Patterns (.gitignore-style):" FontAttributes="Bold" />
                     <Editor Text="{Binding Exclusions}"
-                            AutoSize="TextChanges"
-                            HeightRequest="100"
-                            FontFamily="Consolas"
-                            BackgroundColor="LightGray"
-                            TextColor="Black" />
+                AutoSize="TextChanges"
+                HeightRequest="100"
+                FontFamily="Consolas"
+                BackgroundColor="LightGray"
+                TextColor="Black" />
+
+                    <!-- 🌐 Global Ignore Trigger -->
+                    <Button Text="Edit Global Ignore Rules"
+                Command="{Binding EditGlobalIgnoreCommand}"
+                Style="{StaticResource NavButtonStyle}"
+                Margin="0,6" />
+
+                    <!-- 🌐 Global Ignore Editor -->
+                    <Border IsVisible="{Binding IsEditingGlobalIgnore}"
+                BackgroundColor="{AppThemeBinding Light=#f9f9f9, Dark=#1c1c1c}"
+                Stroke="{AppThemeBinding Light=Gray, Dark=DarkGray}"
+                StrokeShape="RoundRectangle 8"
+                Padding="12"
+                Margin="0,6">
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="Global Exclude Patterns (applied to all folders):"
+                       FontAttributes="Bold" />
+                            <Editor Text="{Binding GlobalIgnoreExclusions}"
+                        FontFamily="Consolas"
+                        AutoSize="TextChanges"
+                        BackgroundColor="LightGray"
+                        TextColor="Black"
+                        HeightRequest="120" />
+                            <HorizontalStackLayout HorizontalOptions="End">
+                                <Button Text="Save Global Ignore"
+                            Command="{Binding SaveGlobalIgnoreCommand}"
+                            Style="{StaticResource NavButtonStyle}" />
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <!-- ✅ Apply Global Ignore Manually -->
+                    <Button Text="Apply Global Ignore to This Folder"
+                Command="{Binding ApplyGlobalIgnoreCommand}"
+                Style="{StaticResource NavButtonStyle}"
+                Margin="0,6"
+                IsEnabled="{Binding HasSelectedFolder}" />
                 </VerticalStackLayout>
             </controls:HorizontalSplitterView.Panel1Content>
 
-            <!-- Right Panel -->
-            <controls:HorizontalSplitterView.Panel2Content>
-                <Grid RowDefinitions="Auto,*"
-                      VerticalOptions="Fill"
-                      HorizontalOptions="Fill"
-                      Padding="12"
-                      RowSpacing="8">
 
-                    <!-- 📋 Copy Button -->
+            <!-- 🖼️ Right Panel: Tree Preview -->
+            <controls:HorizontalSplitterView.Panel2Content>
+                <Grid RowDefinitions="Auto,*" Padding="12" RowSpacing="8">
                     <Button Grid.Row="0"
                             Text="Copy Preview"
                             Command="{Binding CopyPreviewCommand}"
                             Style="{StaticResource NavButtonStyle}"
                             IsEnabled="{Binding HasSelectedFolder}"
                             HorizontalOptions="End" />
-
-                    <!-- 🔍 Scrollable Preview Output -->
                     <Border Grid.Row="1"
                             StrokeShape="RoundRectangle 6"
                             Stroke="{AppThemeBinding Light=#333333, Dark=#444444}"
@@ -140,9 +140,11 @@
                                     TextColor="{AppThemeBinding Light=Black, Dark=LightGray}"
                                     AutoSize="Disabled"
                                     IsReadOnly="True"
-                                    VerticalOptions="Fill"
+                                    VerticalOptions="Start"
                                     HorizontalOptions="Fill"
-                                    WidthRequest="1000" />
+                                    WidthRequest="1000"
+                                    HeightRequest="800" />
+
                         </ScrollView>
                     </Border>
                 </Grid>
@@ -150,9 +152,6 @@
         </controls:HorizontalSplitterView>
 
         <!-- 📌 Footer -->
-        <Label Grid.Row="3"
-               Text="v1.0 • TreeGlyph"
-               FontSize="10"
-               HorizontalOptions="Center" />
+        <Label Grid.Row="3" Text="v1.0 • TreeGlyph" FontSize="10" HorizontalOptions="Center" />
     </Grid>
 </ContentPage>

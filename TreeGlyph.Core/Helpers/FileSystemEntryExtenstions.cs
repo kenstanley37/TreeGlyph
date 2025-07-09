@@ -1,7 +1,7 @@
 ﻿using System.Text;
-using TreeGlyph.UI.Models;
+using TreeGlyph.Core.Models;
 
-namespace TreeGlyph.UI.Helpers
+namespace TreeGlyph.Core.Helpers
 {
     public static class FileSystemEntryExtensions
     {

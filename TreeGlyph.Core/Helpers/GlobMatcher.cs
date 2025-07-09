@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace TreeGlyph.UI.Helpers;
+namespace TreeGlyph.Core.Helpers;
 
 public class GlobMatcher
 {
@@ -12,7 +12,7 @@ public class GlobMatcher
         {
             var trimmed = line.Trim();
 
-            if (string.IsNullOrEmpty(trimmed) || trimmed.StartsWith("#"))
+            if (string.IsNullOrWhiteSpace(trimmed) || trimmed.StartsWith("#"))
                 continue;
 
             bool isNegation = trimmed.StartsWith("!");
@@ -24,12 +24,14 @@ public class GlobMatcher
 
             var expr = new Regex(regex, RegexOptions.IgnoreCase);
 
-            if (isNegation)
-                matchers.Add(path => !expr.IsMatch(path));
-            else
-                matchers.Add(path => expr.IsMatch(path));
+            matchers.Add(path => isNegation ? !expr.IsMatch(path) : expr.IsMatch(path));
         }
     }
+
+    /// <summary>
+    /// Checks whether the path should be excluded based on rules.
+    /// </summary>
+    public bool IsExcluded(string relativePath) => ShouldExclude(relativePath);
 
     public bool ShouldExclude(string relativePath)
     {
@@ -38,7 +40,6 @@ public class GlobMatcher
             if (match(relativePath))
                 return true;
         }
-
         return false;
     }
 }

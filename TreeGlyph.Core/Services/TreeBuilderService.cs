@@ -1,7 +1,7 @@
 ﻿using DotNet.Globbing;
-using TreeGlyph.UI.Models;
+using TreeGlyph.Core.Models;
 
-namespace TreeGlyph.UI.Services;
+namespace TreeGlyph.Core.Services;
 
 public class TreeBuilderService
 {
