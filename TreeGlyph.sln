@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Console", "Console\Console.csproj", "{4C074499-B055-7471-2414-75766D22C168}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{5ED06CAD-956C-C94D-BC0C-E89E30A887C2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI", "UI\UI.csproj", "{5B286F5E-1DA4-C61D-7861-80C46E44F0B3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4C074499-B055-7471-2414-75766D22C168}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C074499-B055-7471-2414-75766D22C168}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C074499-B055-7471-2414-75766D22C168}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C074499-B055-7471-2414-75766D22C168}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5ED06CAD-956C-C94D-BC0C-E89E30A887C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5ED06CAD-956C-C94D-BC0C-E89E30A887C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5ED06CAD-956C-C94D-BC0C-E89E30A887C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5ED06CAD-956C-C94D-BC0C-E89E30A887C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B286F5E-1DA4-C61D-7861-80C46E44F0B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B286F5E-1DA4-C61D-7861-80C46E44F0B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B286F5E-1DA4-C61D-7861-80C46E44F0B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B286F5E-1DA4-C61D-7861-80C46E44F0B3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

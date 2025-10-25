@@ -1,66 +1,94 @@
-# 🌲 TreeGlyph
+# 🌳 TreeGlyph
 
-**TreeGlyph** is a fast, user-friendly utility for visualizing folder structures — with both a native .NET MAUI desktop UI and a powerful CLI tool. Exclude folders using `.treeglyphignore`, copy trees to clipboard, save as text, or just enjoy the visual clarity.
+TreeGlyph is a cross-platform tool that generates clean, readable ASCII trees of folder structures. It supports `.gitignore`-style exclusion patterns, making it ideal for developers, sysadmins, and anyone who wants to visualize directory layouts without the clutter.
 
----
-
-## 🖥️ Desktop UI Preview
-
-Explore and inspect directories with a responsive, desktop-native interface:
-
-![TreeGlyph UI](assets/treeglyph-ui.gif)
+Available as both a **Console app** and a **.NET MAUI GUI**, TreeGlyph adapts to your workflow — whether you're scripting on a server or browsing visually on desktop.
 
 ---
 
-## 🧮 Command Line Output
+## 🚀 Features
 
-Render nested folder structures in your terminal with clean ASCII formatting:
+- 📁 Visualize folder hierarchies in ASCII format
+- 🧹 Exclude files/folders using `.gitignore`-style patterns
+- 🌐 Global and local ignore rules
+- ✂️ Depth control for nested trees
+- 📋 Copy output to clipboard
+- 💾 Save output to file
+- 🖥️ Dual-mode: Console + MAUI GUI
 
-![TreeGlyph Console](assets/treeglyph-console.gif)
+---
+
+## 🧪 Console Usage
 
 ```bash
-treeglyph src bin,obj,node_modules --depth 2 --clipboard
+treeglyph [folder] [excludes] [options]
 
-
-TreeGlyph CLI
-
-📦 Installer
-TreeGlyph comes with a Windows installer that lets you:
-- Choose install location
-- Automatically add TreeGlyph to your system PATH
-- Add Start Menu shortcuts
-TreeGlyph Installer
-
-🚀 Installation
-- Download TreeGlyphSetup.exe from Releases
-- Run the installer — accept default or choose custom path
-- Launch via Start Menu or open terminal and type:
-treeglyph
+
+Example
+treeglyph src bin,obj,node_modules --depth 2 --save tree.txt --clipboard
 
 
-You can also use dotnet tool install --global treeglyph if published to NuGet.
-
-
-🔧 CLI Options
-| Option | Description | 
-| --depth [n] | Limit nesting depth | 
-| --save [path] | Save output to a file | 
-| --clipboard | Copy output to clipboard | 
-| --noglobal | Skip applying global ignore rules | 
-| --setglobal [r] | Overwrite global ignore file (comma-separated rules) | 
-| --editglobal | Open global ignore file in text editor | 
-| --help | Show command line help | 
+Options
+|  |  | 
+| --depth [n] |  | 
+| --save [path] |  | 
+| --clipboard |  | 
+| --noglobal |  | 
+| --setglobal [r] |  | 
+| --editglobal |  | 
+| --help |  | 
 
 
 
 📁 Ignore Rules
-- .treeglyphignore in the target folder
-- ignore-global.txt stored in %AppData%\TreeGlyph
-- Inline exclusions passed via CLI:
-treeglyph src bin,obj,temp --noglobal
+TreeGlyph supports three layers of exclusion:
+- Global ignore: Stored in
+%APPDATA%/TreeGlyph/ignore-global.txt
+Use --setglobal or --editglobal to manage.
+- Local ignore: Stored in
+.treeglyphignore in the target folder.
+- CLI patterns: Passed directly as comma-separated values.
+All rules are merged and applied during tree generation.
+
+🧩 Architecture
+TreeGlyph is built with modularity in mind:
+|  |  | 
+| Core.Models | FileSystemEntry | 
+| Core.Services | TreeBuilderService | 
+| Core.Helpers | GlobMatcherFileSystemEntryExtensions | 
+| Console |  | 
+| UI |  | 
+
+
+Tree rendering is handled via recursive traversal and indentation logic, producing output like:
+└── src/
+    ├── Program.cs
+    ├── Models/
+    │   └── FileSystemEntry.cs
+    └── Services/
+        └── TreeBuilderService.cs
 
 
 
-📘 License
-MIT License
-© Kenneth Stanley
+🛠 Developer Setup
+- Clone the repo:
+git clone https://github.com/kenstanley37/TreeGlyph.git
+cd TreeGlyph
+- Build and run the console app:
+dotnet build Console/Console.csproj
+dotnet run --project Console/Console.csproj
+- Or launch the MAUI UI:
+dotnet build UI/UI.csproj
+dotnet run --project UI/UI.csproj
+
+
+
+🤝 Contributing
+We welcome contributions!
+See CONTRIBUTING.md for setup instructions, coding guidelines, and submission tips.
+
+📄 License
+TreeGlyph is released under the MIT License.
+By contributing, you agree your code can be licensed under the same terms.
+
+Happy tree rendering! 🌲

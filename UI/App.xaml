@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:UI.Converters"
+             x:Class="UI.App">
+
+    <Application.Resources>
+        <ResourceDictionary>
+
+            <!-- 🔁 Opacity Converter -->
+            <local:BoolToOpacityConverter x:Key="BoolToOpacityConverter"
+                                          TrueOpacity="1.0"
+                                          FalseOpacity="0.4" />
+
+            <!-- 🎨 App Theme Resources -->
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
+                <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <!-- 🧭 Navigation Button Style -->
+            <Style x:Key="NavButtonStyle" TargetType="Button">
+                <Setter Property="HorizontalOptions" Value="Fill" />
+                <Setter Property="HeightRequest" Value="44" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="Padding" Value="12,0" />
+                <Setter Property="BorderWidth" Value="0" />
+                <Setter Property="CornerRadius" Value="0" />
+                <Setter Property="BackgroundColor" Value="Transparent" />
+                <Setter Property="TextColor" Value="{AppThemeBinding Light=Black, Dark=White}" />
+
+                <!-- 🔚 Complex property element always goes LAST -->
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+
+                            <VisualState x:Name="Normal" />
+
+                            <VisualState x:Name="PointerOver">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor"
+                                Value="{AppThemeBinding Light=#d5d5d5, Dark=#444444}" />
+                                </VisualState.Setters>
+                            </VisualState>
+
+                            <VisualState x:Name="Pressed">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor"
+                                Value="{AppThemeBinding Light=#c0c0c0, Dark=#555555}" />
+                                </VisualState.Setters>
+                            </VisualState>
+
+                            <VisualState x:Name="Disabled">
+                                <VisualState.Setters>
+                                    <Setter Property="TextColor"
+                                Value="{AppThemeBinding Light=#888888, Dark=#666666}" />
+                                    <Setter Property="BackgroundColor"
+                                Value="{AppThemeBinding Light=#f0f0f0, Dark=#2a2a2a}" />
+                                </VisualState.Setters>
+                            </VisualState>
+
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
