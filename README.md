@@ -6,6 +6,15 @@ Available as both a **Console app** and a **.NET MAUI GUI**, TreeGlyph adapts to
 
 ---
 
+## 🎬 Demo: TreeGlyph UI
+
+![TreeGlyph UI Demo](assets/treeglyph-ui.gif)
+
+## 🖥️ Demo: TreeGlyph Console
+
+![TreeGlyph Console Demo](assets/treeglyph-console.gif)
+
+
 ## 🚀 Features
 
 - 📁 Visualize folder hierarchies in ASCII format
