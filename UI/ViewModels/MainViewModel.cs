@@ -160,6 +160,27 @@ public partial class MainViewModel : ObservableObject
         set => SetProperty(ref tooltipMessage, value);
     }
 
+    private bool isOptionsPanelOpen;
+    public bool IsOptionsPanelOpen
+    {
+        get => isOptionsPanelOpen;
+        set => SetProperty(ref isOptionsPanelOpen, value);
+    }
+
+    [RelayCommand]
+    private void ToggleOptionsPanel() => IsOptionsPanelOpen = !IsOptionsPanelOpen;
+
+    private int maxDepth = Preferences.Get(nameof(MaxDepth), 99);
+    public int MaxDepth
+    {
+        get => maxDepth;
+        set
+        {
+            if (SetProperty(ref maxDepth, value))
+                Preferences.Set(nameof(MaxDepth), value);
+        }
+    }
+
     // Derived
     public bool HasSelectedFolder => !string.IsNullOrWhiteSpace(SelectedFolderPath);
 
@@ -206,7 +227,8 @@ public partial class MainViewModel : ObservableObject
         _treeBuilderService.SetExclusions(allRules);
 
         var entry = _treeBuilderService.BuildTree(SelectedFolderPath);
-        TreeOutput = entry?.ToAsciiTree() ?? string.Empty;
+        //TreeOutput = entry?.ToAsciiTree() ?? string.Empty;
+        TreeOutput = entry?.ToAsciiTree(0, MaxDepth) ?? string.Empty;
     }
 
     [RelayCommand]

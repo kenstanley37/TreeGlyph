@@ -7,6 +7,7 @@
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:effects="clr-namespace:UI.Effects"
     xmlns:controls="clr-namespace:UI.Controls"
+    xmlns:converters="clr-namespace:UI.Converters"
     xmlns:local="clr-namespace:UI.Views"
     x:DataType="vm:MainViewModel"
     Title="TreeGlyph">
@@ -116,37 +117,71 @@
 
             <!-- 🖼️ Right Panel: Tree Preview -->
             <controls:HorizontalSplitterView.Panel2Content>
-                <Grid RowDefinitions="Auto,*" Padding="12" RowSpacing="8">
-                    <Button Grid.Row="0"
-                            Text="Copy Preview"
-                            Command="{Binding CopyPreviewCommand}"
-                            Style="{StaticResource NavButtonStyle}"
-                            IsEnabled="{Binding HasSelectedFolder}"
-                            HorizontalOptions="End" />
-                    <Border Grid.Row="1"
-                            StrokeShape="RoundRectangle 6"
-                            Stroke="{AppThemeBinding Light=#333333, Dark=#444444}"
-                            Background="{AppThemeBinding Light=#f9f9f9, Dark=#121212}"
-                            Padding="6"
+                <Grid ColumnDefinitions="*,Auto" Padding="12" ColumnSpacing="8">
+                    <!-- 🌲 Tree Preview Section -->
+                    <Grid Grid.Column="0" RowDefinitions="Auto,*" RowSpacing="8">
+                        <Button Grid.Row="0"
+                    Text="Copy Preview"
+                    Command="{Binding CopyPreviewCommand}"
+                    Style="{StaticResource NavButtonStyle}"
+                    IsEnabled="{Binding HasSelectedFolder}"
+                    HorizontalOptions="End" />
+
+                        <Border Grid.Row="1"
+                    StrokeShape="RoundRectangle 6"
+                    Stroke="{AppThemeBinding Light=#333333, Dark=#444444}"
+                    Background="{AppThemeBinding Light=#f9f9f9, Dark=#121212}"
+                    Padding="6"
+                    VerticalOptions="Fill"
+                    HorizontalOptions="Fill">
+                            <ScrollView VerticalScrollBarVisibility="Always"
+                            HorizontalScrollBarVisibility="Always"
                             VerticalOptions="Fill"
                             HorizontalOptions="Fill">
-                        <ScrollView VerticalScrollBarVisibility="Always"
-                                    HorizontalScrollBarVisibility="Always"
-                                    VerticalOptions="Fill"
-                                    HorizontalOptions="Fill">
-                            <Editor Text="{Binding TreeOutput}"
-                                    FontFamily="Consolas"
-                                    BackgroundColor="Transparent"
-                                    TextColor="{AppThemeBinding Light=Black, Dark=LightGray}"
-                                    AutoSize="Disabled"
-                                    IsReadOnly="True"
-                                    VerticalOptions="Start"
-                                    HorizontalOptions="Fill"
-                                    WidthRequest="1000"
-                                    HeightRequest="800" />
+                                <Editor Text="{Binding TreeOutput}"
+                            FontFamily="Consolas"
+                            BackgroundColor="Transparent"
+                            TextColor="{AppThemeBinding Light=Black, Dark=LightGray}"
+                            AutoSize="Disabled"
+                            IsReadOnly="True"
+                            VerticalOptions="Start"
+                            HorizontalOptions="Fill"
+                            WidthRequest="1000"
+                            HeightRequest="800" />
+                            </ScrollView>
+                        </Border>
+                    </Grid>
 
-                        </ScrollView>
-                    </Border>
+                    <!-- ⚙️ Options Panel -->
+                    <Grid Grid.Column="1"
+              WidthRequest="240"
+              IsVisible="{Binding IsOptionsPanelOpen}">
+                        <Border BackgroundColor="{AppThemeBinding Light=#f0f0f0, Dark=#1a1a1a}"
+                    Stroke="{AppThemeBinding Light=Gray, Dark=DarkGray}"
+                    StrokeShape="RoundRectangle 8"
+                    Padding="12"
+                    VerticalOptions="Fill"
+                    HorizontalOptions="Fill">
+                            <VerticalStackLayout Spacing="12">
+                                <Label Text="Options" FontAttributes="Bold" FontSize="16" />
+                                <Label Text="Max Depth:" />
+                                <Slider Minimum="1" Maximum="99" Value="{Binding MaxDepth}" />
+                                <Switch IsToggled="{Binding AutoSaveIgnoreFile}" />
+                                <!-- Add more settings here -->
+                            </VerticalStackLayout>
+                        </Border>
+                    </Grid>
+
+                    <!-- 🪟 Tab Button -->
+                    <Button Grid.Column="1"
+                Text="Options"
+                Command="{Binding ToggleOptionsPanelCommand}"
+                Style="{StaticResource NavButtonStyle}"
+                WidthRequest="80"
+                HeightRequest="32"
+                VerticalOptions="Start"
+                Margin="0,12,0,0"
+                IsVisible="{Binding IsOptionsPanelOpen, Converter={StaticResource InverseBoolConverter}}" />
                 </Grid>
             </controls:HorizontalSplitterView.Panel2Content>
         </controls:HorizontalSplitterView>
