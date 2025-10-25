@@ -16,12 +16,18 @@
 
 
             <!-- 🎨 App Theme Resources -->
+
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
-                <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
+                <ResourceDictionary Source="Resources/Styles/Buttons.xaml" />
+                <ResourceDictionary Source="Resources/Styles/Text.xaml" />
+                <ResourceDictionary Source="Resources/Styles/Inputs.xaml" />
+                <ResourceDictionary Source="Resources/Styles/Containers.xaml" />
+                <ResourceDictionary Source="Resources/Styles/Pages.xaml" />
+                <ResourceDictionary Source="Resources/Styles/Indicators.xaml" />
+                <ResourceDictionary Source="Resources/Styles/Shadows.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
-            
 
         </ResourceDictionary>
     </Application.Resources>

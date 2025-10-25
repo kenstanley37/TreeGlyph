@@ -1,33 +1,36 @@
-﻿#if WINDOWS
-using Windows.Storage;
-using Windows.Storage.Pickers;
-using WinRT.Interop;
-#endif
-
-using CommunityToolkit.Maui.Alerts;
+﻿using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System.Windows.Input;
+using Core.Helpers;
 using Core.Services;
+using System.Windows.Input;
 using UI.Services;
 using UI.Views;
-using Core.Helpers;
+using Windows.Storage;
+using Windows.Storage.Pickers;
+using WinRT.Interop;
 
-namespace UI.ViewModels;
+namespace UI.ViewModels.MainPageViewModel;
 
 public partial class MainViewModel : ObservableObject
 {
     private readonly TreeBuilderService _treeBuilderService;
     private readonly IFolderPickerService folderPicker;
 
+    public OptionsPanelViewModel OptionsPanel { get; }
+    public GlobalIgnoreViewModel GlobalIgnore { get; }
+    public TooltipViewModel Tooltip { get; }
+
     public MainViewModel(TreeBuilderService treeBuilderService, IFolderPickerService folderPicker)
     {
         _treeBuilderService = treeBuilderService;
         this.folderPicker = folderPicker;
 
-        autoSaveIgnoreFile = Preferences.Get(nameof(AutoSaveIgnoreFile), false);
-        isAdvancedExpanded = Preferences.Get(nameof(IsAdvancedExpanded), false);
+        OptionsPanel = new OptionsPanelViewModel();
+        GlobalIgnore = new GlobalIgnoreViewModel();
+        Tooltip = new TooltipViewModel();
+
         leftPanelWidth = Math.Max(Preferences.Get(nameof(LeftPanelWidth), 320), 240);
     }
 
@@ -42,51 +45,6 @@ public partial class MainViewModel : ObservableObject
                 Preferences.Set(nameof(LeftPanelWidth), value);
         }
     }
-
-    private bool isAdvancedExpanded;
-    public bool IsAdvancedExpanded
-    {
-        get => isAdvancedExpanded;
-        set
-        {
-            if (SetProperty(ref isAdvancedExpanded, value))
-                Preferences.Set(nameof(IsAdvancedExpanded), value);
-        }
-    }
-
-    private bool autoSaveIgnoreFile;
-    public bool AutoSaveIgnoreFile
-    {
-        get => autoSaveIgnoreFile;
-        set
-        {
-            if (SetProperty(ref autoSaveIgnoreFile, value))
-                Preferences.Set(nameof(AutoSaveIgnoreFile), value);
-        }
-    }
-
-    // Global Ignore
-    private string globalIgnoreExclusions = string.Empty;
-    public string GlobalIgnoreExclusions
-    {
-        get => globalIgnoreExclusions;
-        set => SetProperty(ref globalIgnoreExclusions, value);
-    }
-
-    private bool isEditingGlobalIgnore;
-    public bool IsEditingGlobalIgnore
-    {
-        get => isEditingGlobalIgnore;
-        set => SetProperty(ref isEditingGlobalIgnore, value);
-    }
-
-    private bool shouldApplyGlobalIgnore = false;
-    public bool ShouldApplyGlobalIgnore
-    {
-        get => shouldApplyGlobalIgnore;
-        set => SetProperty(ref shouldApplyGlobalIgnore, value);
-    }
-
 
     // Core State
     private string selectedFolderPath = string.Empty;
@@ -146,41 +104,6 @@ public partial class MainViewModel : ObservableObject
         set => SetProperty(ref exclusionTestResult, value);
     }
 
-    private bool isTooltipOpen;
-    public bool IsTooltipOpen
-    {
-        get => isTooltipOpen;
-        set => SetProperty(ref isTooltipOpen, value);
-    }
-
-    private string tooltipMessage = string.Empty;
-    public string TooltipMessage
-    {
-        get => tooltipMessage;
-        set => SetProperty(ref tooltipMessage, value);
-    }
-
-    private bool isOptionsPanelOpen;
-    public bool IsOptionsPanelOpen
-    {
-        get => isOptionsPanelOpen;
-        set => SetProperty(ref isOptionsPanelOpen, value);
-    }
-
-    [RelayCommand]
-    private void ToggleOptionsPanel() => IsOptionsPanelOpen = !IsOptionsPanelOpen;
-
-    private int maxDepth = Preferences.Get(nameof(MaxDepth), 99);
-    public int MaxDepth
-    {
-        get => maxDepth;
-        set
-        {
-            if (SetProperty(ref maxDepth, value))
-                Preferences.Set(nameof(MaxDepth), value);
-        }
-    }
-
     // Derived
     public bool HasSelectedFolder => !string.IsNullOrWhiteSpace(SelectedFolderPath);
 
@@ -205,7 +128,7 @@ public partial class MainViewModel : ObservableObject
 
         GenerateTreeCommand?.Execute(null);
 
-        if (AutoSaveIgnoreFile && !string.IsNullOrWhiteSpace(Exclusions))
+        if (OptionsPanel.AutoSaveIgnoreFile && !string.IsNullOrWhiteSpace(Exclusions))
             await SaveIgnoreFileAsync();
     }
 
@@ -215,8 +138,8 @@ public partial class MainViewModel : ObservableObject
         if (string.IsNullOrWhiteSpace(SelectedFolderPath))
             return;
 
-        var globalRules = ShouldApplyGlobalIgnore && File.Exists(GetGlobalIgnorePath())
-            ? File.ReadAllLines(GetGlobalIgnorePath())
+        var globalRules = GlobalIgnore.ShouldApplyGlobalIgnore && File.Exists(GlobalIgnore.IgnoreFilePath)
+            ? File.ReadAllLines(GlobalIgnore.IgnoreFilePath)
             : Array.Empty<string>();
 
         var localRules = exclusions.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries)
@@ -227,8 +150,7 @@ public partial class MainViewModel : ObservableObject
         _treeBuilderService.SetExclusions(allRules);
 
         var entry = _treeBuilderService.BuildTree(SelectedFolderPath);
-        //TreeOutput = entry?.ToAsciiTree() ?? string.Empty;
-        TreeOutput = entry?.ToAsciiTree(0, MaxDepth) ?? string.Empty;
+        TreeOutput = entry?.ToAsciiTree(0, OptionsPanel.MaxDepth) ?? string.Empty;
     }
 
     [RelayCommand]
@@ -291,41 +213,5 @@ public partial class MainViewModel : ObservableObject
             await Clipboard.SetTextAsync(TreeOutput);
             await Shell.Current.DisplayAlert("Copied", "Preview copied to clipboard.", "OK");
         }
-    }
-
-    [RelayCommand]
-    private async Task EditGlobalIgnoreAsync()
-    {
-        var globalPath = GetGlobalIgnorePath();
-        if (!File.Exists(globalPath))
-            File.WriteAllText(globalPath, "# Add your global ignore rules here\n");
-
-        GlobalIgnoreExclusions = await File.ReadAllTextAsync(globalPath);
-        IsEditingGlobalIgnore = true;
-    }
-
-    [RelayCommand]
-    private async Task SaveGlobalIgnoreAsync()
-    {
-        var globalPath = GetGlobalIgnorePath();
-        await File.WriteAllTextAsync(globalPath, GlobalIgnoreExclusions.Trim());
-        IsEditingGlobalIgnore = false;
-        await Toast.Make("✅ Global ignore rules saved").Show();
-    }
-
-    [RelayCommand]
-    private void ApplyGlobalIgnore()
-    {
-        ShouldApplyGlobalIgnore = true;
-        GenerateTree(); // regenerate with updated exclusions
-    }
-
-
-    private static string GetGlobalIgnorePath()
-    {
-        var appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-        var dir = Path.Combine(appData, "TreeGlyph");
-        Directory.CreateDirectory(dir);
-        return Path.Combine(dir, "ignore-global.txt");
     }
 }

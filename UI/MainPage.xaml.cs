@@ -1,4 +1,4 @@
-﻿using UI.ViewModels;
+﻿using UI.ViewModels.MainPageViewModel;
 using UI.Views;
 
 namespace UI;
@@ -10,8 +10,11 @@ public partial class MainPage : ContentPage
         InitializeComponent();
         BindingContext = vm;
 
+        // Wire up animation target for the unified sliding container
+        vm.OptionsPanel.PanelView = OptionsPanelContainer; // x:Name="OptionsPanelContainer" in XAML
 
 #if WINDOWS
+        // Add any platform-specific logic here if needed
 #endif
     }
 
@@ -19,6 +22,4 @@ public partial class MainPage : ContentPage
     {
         await Shell.Current.GoToAsync(nameof(AboutPage));
     }
-
-
 }

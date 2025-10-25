@@ -2,9 +2,10 @@
 using UI;
 using Core.Services;
 using UI.Services;
-using UI.ViewModels;
 using CommunityToolkit.Maui;
 using Platforms.Windows;
+using UI.ViewModels.MainPageViewModel;
+
 
 
 #if WINDOWS

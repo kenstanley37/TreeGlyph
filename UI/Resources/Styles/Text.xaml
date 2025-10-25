@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             >
+
+    <!-- 🏷️ Label Style -->
+    <Style TargetType="Label">
+        <Setter Property="FontFamily" Value="OpenSansRegular" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light=Black, Dark=White}" />
+    </Style>
+
+    <!-- 📝 Editor Style -->
+    <Style TargetType="Editor">
+        <Setter Property="FontFamily" Value="OpenSansRegular" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light=Black, Dark=White}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+    </Style>
+
+    <!-- 🔍 SearchBar Style -->
+    <Style TargetType="SearchBar">
+        <Setter Property="FontFamily" Value="OpenSansRegular" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light=Black, Dark=White}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+    </Style>
+
+    <!-- 🔎 SearchHandler Style -->
+    <Style TargetType="SearchHandler">
+        <Setter Property="FontFamily" Value="OpenSansRegular" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Placeholder" Value="Search..." />
+    </Style>
+
+    <!-- ✏️ Entry Style -->
+    <Style TargetType="Entry">
+        <Setter Property="FontFamily" Value="OpenSansRegular" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light=Black, Dark=White}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+    </Style>
+
+
+</ResourceDictionary>

@@ -3,7 +3,7 @@
     x:Class="UI.MainPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:vm="clr-namespace:UI.ViewModels"
+    xmlns:vm="clr-namespace:UI.ViewModels.MainPageViewModel;assembly=UI"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:effects="clr-namespace:UI.Effects"
     xmlns:controls="clr-namespace:UI.Controls"
@@ -115,9 +115,9 @@
             </controls:HorizontalSplitterView.Panel1Content>
 
 
-            <!-- 🖼️ Right Panel: Tree Preview -->
             <controls:HorizontalSplitterView.Panel2Content>
                 <Grid ColumnDefinitions="*,Auto" Padding="12" ColumnSpacing="8">
+
                     <!-- 🌲 Tree Preview Section -->
                     <Grid Grid.Column="0" RowDefinitions="Auto,*" RowSpacing="8">
                         <Button Grid.Row="0"
@@ -128,60 +128,118 @@
                     HorizontalOptions="End" />
 
                         <Border Grid.Row="1"
-                    StrokeShape="RoundRectangle 6"
-                    Stroke="{AppThemeBinding Light=#333333, Dark=#444444}"
-                    Background="{AppThemeBinding Light=#f9f9f9, Dark=#121212}"
-                    Padding="6"
-                    VerticalOptions="Fill"
-                    HorizontalOptions="Fill">
-                            <ScrollView VerticalScrollBarVisibility="Always"
-                            HorizontalScrollBarVisibility="Always"
+                            StrokeShape="RoundRectangle 6"
+                            Stroke="{AppThemeBinding Light=#333333, Dark=#444444}"
+                            Background="{AppThemeBinding Light=#f9f9f9, Dark=#121212}"
+                            Padding="6"
                             VerticalOptions="Fill"
                             HorizontalOptions="Fill">
+                            <ScrollView VerticalScrollBarVisibility="Always"
+                                HorizontalScrollBarVisibility="Always"
+                                VerticalOptions="Fill"
+                                HorizontalOptions="Fill">
                                 <Editor Text="{Binding TreeOutput}"
-                            FontFamily="Consolas"
-                            BackgroundColor="Transparent"
-                            TextColor="{AppThemeBinding Light=Black, Dark=LightGray}"
-                            AutoSize="Disabled"
-                            IsReadOnly="True"
-                            VerticalOptions="Start"
-                            HorizontalOptions="Fill"
-                            WidthRequest="1000"
-                            HeightRequest="800" />
+                                    FontFamily="Consolas"
+                                    BackgroundColor="Transparent"
+                                    TextColor="{AppThemeBinding Light=Black, Dark=LightGray}"
+                                    AutoSize="Disabled"
+                                    IsReadOnly="True"
+                                    VerticalOptions="Start"
+                                    HorizontalOptions="Fill"
+                                    WidthRequest="1000"
+                                    HeightRequest="800" />
                             </ScrollView>
                         </Border>
                     </Grid>
 
-                    <!-- ⚙️ Options Panel -->
-                    <Grid Grid.Column="1"
-              WidthRequest="240"
-              IsVisible="{Binding IsOptionsPanelOpen}">
-                        <Border BackgroundColor="{AppThemeBinding Light=#f0f0f0, Dark=#1a1a1a}"
+                    <!-- ⚙️ Options Panel + Tab (Unified Sliding Container) -->
+                    <AbsoluteLayout Grid.Column="1">
+
+                        <!-- 🧩 Floating Drawer Container -->
+                        <Grid x:Name="OptionsPanelContainer"
+                            WidthRequest="272" 
+                            HeightRequest="400"
+                            TranslationX="288"
+                            AbsoluteLayout.LayoutBounds="1,0.85,272,400"
+                            AbsoluteLayout.LayoutFlags="PositionProportional">
+
+                            <!-- ⚙️ Options Panel -->
+                            <Grid WidthRequest="240"
+                              HeightRequest="400"
+                              HorizontalOptions="Start"
+                              VerticalOptions="Fill">
+                                <Border BackgroundColor="{AppThemeBinding Light=#f0f0f0, Dark=#1a1a1a}"
                     Stroke="{AppThemeBinding Light=Gray, Dark=DarkGray}"
                     StrokeShape="RoundRectangle 8"
                     Padding="12"
                     VerticalOptions="Fill"
                     HorizontalOptions="Fill">
-                            <VerticalStackLayout Spacing="12">
-                                <Label Text="Options" FontAttributes="Bold" FontSize="16" />
-                                <Label Text="Max Depth:" />
-                                <Slider Minimum="1" Maximum="99" Value="{Binding MaxDepth}" />
-                                <Switch IsToggled="{Binding AutoSaveIgnoreFile}" />
-                                <!-- Add more settings here -->
-                            </VerticalStackLayout>
-                        </Border>
-                    </Grid>
+                                    <Border.Shadow>
+                                        <Shadow Brush="Black" Opacity="0.2" Radius="8" Offset="4,4" />
+                                    </Border.Shadow>
 
-                    <!-- 🪟 Tab Button -->
-                    <Button Grid.Column="1"
-                Text="Options"
-                Command="{Binding ToggleOptionsPanelCommand}"
-                Style="{StaticResource NavButtonStyle}"
-                WidthRequest="80"
-                HeightRequest="32"
-                VerticalOptions="Start"
-                Margin="0,12,0,0"
-                IsVisible="{Binding IsOptionsPanelOpen, Converter={StaticResource InverseBoolConverter}}" />
+                                    <VerticalStackLayout Spacing="12">
+
+                                        <!-- ❌ Close Button -->
+                                        <Button Text="✖"
+                            HorizontalOptions="End"
+                            Command="{Binding OptionsPanel.TogglePanelCommand}"
+                            BackgroundColor="Transparent"
+                            FontSize="18"
+                            Padding="0"
+                            WidthRequest="32"
+                            HeightRequest="32"
+                            TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+
+                                        <!-- 📏 Max Depth -->
+                                        <Label Text="Max Depth:"
+                           FontSize="14"
+                           TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+                                        <Slider Minimum="1"
+                            Maximum="99"
+                            Value="{Binding OptionsPanel.MaxDepth}" />
+                                        <Label Text="{Binding OptionsPanel.MaxDepth, StringFormat='Max Depth: {0}'}"
+                           FontSize="14"
+                           TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+
+                                        <!-- 💾 Auto Save Toggle -->
+                                        <HorizontalStackLayout Spacing="8">
+                                            <Label Text="Auto Save Ignore File"
+                               FontSize="14"
+                               VerticalOptions="Center"
+                               TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+                                            <Switch IsToggled="{Binding OptionsPanel.AutoSaveIgnoreFile}" />
+                                        </HorizontalStackLayout>
+
+                                        <!-- Add more settings here -->
+
+                                    </VerticalStackLayout>
+                                </Border>
+                            </Grid>
+
+                            <!-- 🪟 Tab Handle (attached to panel) -->
+                            <Border BackgroundColor="{AppThemeBinding Light=#cccccc, Dark=#444444}"
+                Stroke="{AppThemeBinding Light=Gray, Dark=DarkGray}"
+                StrokeShape="RoundRectangle 4"
+                Padding="6"
+                WidthRequest="32"
+                HeightRequest="80"
+                HorizontalOptions="End"
+                VerticalOptions="Center"
+                Margin="0,0,-8,0">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding OptionsPanel.TogglePanelCommand}" />
+                                </Border.GestureRecognizers>
+                                <Label Text="⚙️"
+                   FontSize="18"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+                            </Border>
+
+                        </Grid>
+
+                    </AbsoluteLayout>
                 </Grid>
             </controls:HorizontalSplitterView.Panel2Content>
         </controls:HorizontalSplitterView>

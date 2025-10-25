@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             >
+
+    <!-- 🔄 ActivityIndicator Style -->
+    <Style TargetType="ActivityIndicator">
+        <Setter Property="Color" Value="{AppThemeBinding Light=Black, Dark=White}" />
+        <Setter Property="HeightRequest" Value="32" />
+        <Setter Property="WidthRequest" Value="32" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+    <!-- 📶 ProgressBar Style -->
+    <Style TargetType="ProgressBar">
+        <Setter Property="ProgressColor" Value="{AppThemeBinding Light=#007aff, Dark=#0a84ff}" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light=#e0e0e0, Dark=#333333}" />
+        <Setter Property="HeightRequest" Value="4" />
+    </Style>
+
+    <!-- 🔘 IndicatorView Style -->
+    <Style TargetType="IndicatorView">
+        <Setter Property="IndicatorColor" Value="{AppThemeBinding Light=#cccccc, Dark=#444444}" />
+        <Setter Property="SelectedIndicatorColor" Value="{AppThemeBinding Light=Black, Dark=White}" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="Margin" Value="0,12,0,0" />
+    </Style>
+
+</ResourceDictionary>
