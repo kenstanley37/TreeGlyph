@@ -30,7 +30,7 @@ Available as both a **Console app** and a **.NET MAUI GUI**, TreeGlyph adapts to
 ## 🧪 Console Usage
 
 ```bash
-treeglyph [folder] [excludes] [options]
+treeglyph FOLDER [excludes] OPTIONS
 
 
 Example

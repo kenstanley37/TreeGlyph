@@ -1,10 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Infrastructure.Services;
 
 namespace UI.ViewModels.MainPageViewModel;
 
 public partial class GlobalIgnoreViewModel : ObservableObject
 {
+    public MainViewModel? Parent { get; set; }
+
     private string globalIgnoreExclusions = string.Empty;
     public string GlobalIgnoreExclusions
     {
@@ -19,11 +22,18 @@ public partial class GlobalIgnoreViewModel : ObservableObject
         set => SetProperty(ref isEditingGlobalIgnore, value);
     }
 
-    private bool shouldApplyGlobalIgnore;
+    private bool shouldApplyGlobalIgnore = Preferences.Get(nameof(ShouldApplyGlobalIgnore), false);
     public bool ShouldApplyGlobalIgnore
     {
         get => shouldApplyGlobalIgnore;
-        set => SetProperty(ref shouldApplyGlobalIgnore, value);
+        set
+        {
+            if (SetProperty(ref shouldApplyGlobalIgnore, value))
+            {
+                Preferences.Set(nameof(ShouldApplyGlobalIgnore), value);
+                LogService.Write("GLOBAL-IGNORE", $"Toggle persisted: {value}");
+            }
+        }
     }
 
     public string IgnoreFilePath => Path.Combine(
@@ -31,14 +41,62 @@ public partial class GlobalIgnoreViewModel : ObservableObject
         "TreeGlyph",
         "ignore-global.txt");
 
+    private bool hasLoggedLoad = false;
+
+    public GlobalIgnoreViewModel()
+    {
+        IsEditingGlobalIgnore = false; // 🔒 Start hidden
+        LoadGlobalIgnoreFile();
+    }
+
+    private void LoadGlobalIgnoreFile()
+    {
+        if (File.Exists(IgnoreFilePath))
+        {
+            GlobalIgnoreExclusions = File.ReadAllText(IgnoreFilePath);
+
+            if (!hasLoggedLoad)
+            {
+                LogService.Write("GLOBAL-IGNORE", $"Loaded global ignore file: {IgnoreFilePath}");
+                hasLoggedLoad = true;
+            }
+
+            if (!string.IsNullOrWhiteSpace(GlobalIgnoreExclusions))
+            {
+                ShouldApplyGlobalIgnore = true;
+                LogService.Write("GLOBAL-IGNORE", "Auto-applied global ignore rules.");
+            }
+        }
+        else
+        {
+            LogService.Write("GLOBAL-IGNORE", "No global ignore file found on startup.");
+        }
+    }
+
     [RelayCommand]
-    public async Task LoadGlobalIgnoreAsync()
+    public void CancelEdit()
+    {
+        IsEditingGlobalIgnore = false;
+        LogService.Write("GLOBAL-IGNORE", "Edit canceled.");
+    }
+
+    [RelayCommand]
+    public async Task EditGlobalIgnoreAsync()
     {
         if (!File.Exists(IgnoreFilePath))
-            File.WriteAllText(IgnoreFilePath, "# Add your global ignore rules here\n");
+        {
+            await Task.Run(() =>
+            {
+                File.WriteAllText(IgnoreFilePath, "# Add your global ignore rules here\n");
+            });
 
-        GlobalIgnoreExclusions = await File.ReadAllTextAsync(IgnoreFilePath);
+            LogService.Write("GLOBAL-IGNORE", $"Created new ignore file: {IgnoreFilePath}");
+        }
+
+        await Task.Run(() => LoadGlobalIgnoreFile());
+
         IsEditingGlobalIgnore = true;
+        LogService.Write("GLOBAL-IGNORE", "Edit session started.");
     }
 
     [RelayCommand]
@@ -46,11 +104,13 @@ public partial class GlobalIgnoreViewModel : ObservableObject
     {
         await File.WriteAllTextAsync(IgnoreFilePath, GlobalIgnoreExclusions.Trim());
         IsEditingGlobalIgnore = false;
+        LogService.Write("GLOBAL-IGNORE", $"Saved global ignore file: {IgnoreFilePath}");
     }
 
     [RelayCommand]
     public void ApplyGlobalIgnore()
     {
         ShouldApplyGlobalIgnore = true;
+        LogService.Write("GLOBAL-IGNORE", "Global ignore applied.");
     }
 }

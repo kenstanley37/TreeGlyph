@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:UI.ViewModels.MainPageViewModel"
+             x:Class="UI.Views.MainPageViews.FolderPanelView"
+             x:Name="Root"
+             x:DataType="vm:FolderPanelViewModel">
+
+    <VerticalStackLayout Padding="16"
+                         Spacing="12"
+                         HorizontalOptions="Fill"
+                         VerticalOptions="Fill">
+
+        <!-- 📁 Exclude Patterns Header -->
+        <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
+            <Label Text="Exclude Patterns (.gitignore-style):"
+                   FontSize="16"
+                   FontAttributes="Bold"
+                   TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+
+            <Label Text="(i)"
+                   FontSize="12"
+                   FontAttributes="Bold"
+                   TextColor="{AppThemeBinding Light=#007ACC, Dark=#66CCFF}"
+                   VerticalOptions="Center">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ShowExclusionInfoCommand}" />
+                </Label.GestureRecognizers>
+            </Label>
+        </HorizontalStackLayout>
+
+        <!-- 📋 View Examples Button -->
+        <Button Text="View Examples"
+                FontSize="12"
+                Padding="10,4"
+                BackgroundColor="{AppThemeBinding Light=#eeeeee, Dark=#333333}"
+                TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                Command="{Binding ShowExclusionExamplesCommand}"
+                HorizontalOptions="Start" />
+
+        <!-- 📝 Exclude Patterns Editor -->
+        <Border StrokeShape="RoundRectangle 6"
+                Stroke="{AppThemeBinding Light=#cccccc, Dark=#444444}"
+                Background="{AppThemeBinding Light=#f9f9f9, Dark=#121212}"
+                Padding="12"
+                Margin="0,4,0,8"
+                HorizontalOptions="Fill"
+                VerticalOptions="Start">
+
+            <Editor Text="{Binding ExclusionsLocal}"
+                    Placeholder="{Binding ExclusionPlaceholder}"
+                    FontFamily="Consolas"
+                    FontSize="14"
+                    AutoSize="Disabled"
+                    IsReadOnly="False"
+                    BackgroundColor="Transparent"
+                    TextColor="{AppThemeBinding Light=Black, Dark=LightGray}"
+                    HorizontalOptions="Fill"
+                    VerticalOptions="Fill" />
+        </Border>
+
+        <!-- 🌐 Global Ignore Toggle -->
+        <VerticalStackLayout Spacing="12" Padding="0,4,0,0" VerticalOptions="Center">
+            <Label Text="Apply Global Ignore During Tree Generation"
+                   FontSize="14"
+                   VerticalOptions="Center"
+                   TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+            <Switch IsToggled="{Binding GlobalIgnore.ShouldApplyGlobalIgnore}" />
+        </VerticalStackLayout>
+
+        <!-- 🌐 Global Ignore Trigger -->
+        <Button Text="Edit Global Ignore Rules"
+                Padding="10,4"
+                BackgroundColor="{AppThemeBinding Light=#eeeeee, Dark=#333333}"
+                TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                Command="{Binding GlobalIgnore.EditGlobalIgnoreCommand}"
+                Margin="0,8,0,0"
+                HorizontalOptions="Start" />
+
+        <!-- 🌐 Global Ignore Editor Modal -->
+        <Border IsVisible="{Binding GlobalIgnore.IsEditingGlobalIgnore}"
+                StrokeShape="RoundRectangle 6"
+                Stroke="{AppThemeBinding Light=#cccccc, Dark=#444444}"
+                Background="{AppThemeBinding Light=#fffdfd, Dark=#1a1a1a}"
+                Padding="12"
+                Margin="0,8,0,0"
+                HorizontalOptions="Fill"
+                VerticalOptions="Start">
+
+            <VerticalStackLayout Spacing="8">
+
+                <Label Text="Global Exclude Patterns (applied to all folders):"
+                       FontSize="14"
+                       FontAttributes="Bold"
+                       TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+
+                <ScrollView HorizontalScrollBarVisibility="Always"
+                            VerticalScrollBarVisibility="Always"
+                            HeightRequest="120"
+                            HorizontalOptions="Fill"
+                            VerticalOptions="Fill">
+
+                    <Editor Text="{Binding GlobalIgnore.GlobalIgnoreExclusions}"
+                            Placeholder="e.g. *.user, .vs/, *.tmp"
+                            FontFamily="Consolas"
+                            FontSize="13"
+                            AutoSize="Disabled"
+                            IsReadOnly="False"
+                            BackgroundColor="Transparent"
+                            TextColor="{AppThemeBinding Light=Black, Dark=LightGray}"
+                            HorizontalOptions="Fill"
+                            VerticalOptions="Start" />
+                </ScrollView>
+
+                <HorizontalStackLayout HorizontalOptions="End" Spacing="8">
+                    <Button Text="Save Global Ignore"
+                            Padding="10,4"
+                            BackgroundColor="{AppThemeBinding Light=#eeeeee, Dark=#333333}"
+                            TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                            Command="{Binding GlobalIgnore.SaveGlobalIgnoreCommand}" />
+
+                    <Button Text="Cancel"
+                            Padding="10,4"
+                            BackgroundColor="{AppThemeBinding Light=#eeeeee, Dark=#333333}"
+                            TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                            Command="{Binding GlobalIgnore.CancelEditCommand}" />
+                </HorizontalStackLayout>
+
+            </VerticalStackLayout>
+        </Border>
+
+        <!-- ✅ Apply Global Ignore Manually -->
+        <Button Text="Apply Global Ignore to This Folder"
+                Padding="10,4"
+                BackgroundColor="{AppThemeBinding Light=#eeeeee, Dark=#333333}"
+                TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                Command="{Binding GlobalIgnore.ApplyGlobalIgnoreCommand}"
+                IsEnabled="{Binding HasSelectedFolder}"
+                Margin="0,8,0,0"
+                HorizontalOptions="Start" />
+
+    </VerticalStackLayout>
+    
+    
+</ContentView>

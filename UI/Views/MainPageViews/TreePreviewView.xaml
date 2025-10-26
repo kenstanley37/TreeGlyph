@@ -1,0 +1,103 @@
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:UI.ViewModels.MainPageViewModel"
+             x:Class="UI.Views.MainPageViews.TreePreviewView"
+             x:Name="Root"
+             x:DataType="vm:TreePreviewViewModel">
+
+    <Grid RowDefinitions="Auto,Auto,*,Auto" RowSpacing="8" Padding="12">
+
+        <!-- 📋 Metrics + Copy Button Row -->
+        <Grid Grid.Row="0"
+              ColumnDefinitions="*,Auto"
+              Padding="0,0,0,4"
+              VerticalOptions="Center"
+              HorizontalOptions="Fill">
+
+            <!-- ⏱ Metrics Left-Aligned -->
+            <HorizontalStackLayout Grid.Column="0"
+                                   Spacing="16"
+                                   HorizontalOptions="Start"
+                                   VerticalOptions="Center">
+                <Label Text="{Binding ElapsedTime, StringFormat='Elapsed: {0}'}"
+                       FontSize="12"
+                       TextColor="{AppThemeBinding Light=Gray, Dark=LightGray}" />
+
+                <Label Text="{Binding MemoryUsage, StringFormat='Memory: {0}'}"
+                       FontSize="12"
+                       TextColor="{AppThemeBinding Light=Gray, Dark=LightGray}" />
+
+
+            </HorizontalStackLayout>
+
+            <!-- 📋 Copy Button Right-Aligned -->
+            <Button Grid.Column="1"
+                    Text="Copy Preview"
+                    Command="{Binding CopyPreviewCommand}"
+                    Style="{StaticResource NavButtonStyle}"
+                    IsEnabled="{Binding HasSelectedFolder}"
+                    VerticalOptions="Center"
+                    HorizontalOptions="End" />
+        </Grid>
+
+        <!-- 📂 Selected Folder Path -->
+        <Label Grid.Row="1"
+           Text="{Binding SelectedFolderPath, StringFormat='Currently Building Tree for Folder: {0}'}"
+           FontSize="12"
+           TextColor="{AppThemeBinding Light=DarkGray, Dark=LightGray}"
+           LineBreakMode="TailTruncation"
+           MaxLines="1"
+           Margin="0,0,0,4"
+           IsVisible="{Binding HasSelectedFolder}" />
+
+        <!-- 🖼️ Preview Output -->
+        <Border Grid.Row="2"
+                StrokeShape="RoundRectangle 6"
+                Stroke="{AppThemeBinding Light=#333333, Dark=#444444}"
+                Background="{AppThemeBinding Light=#f9f9f9, Dark=#121212}"
+                Padding="6"
+                VerticalOptions="Fill"
+                HorizontalOptions="Fill">
+            <ScrollView VerticalScrollBarVisibility="Always"
+                        HorizontalScrollBarVisibility="Always"
+                        VerticalOptions="Fill"
+                        HorizontalOptions="Fill">
+                <Editor Text="{Binding TreeOutput}"
+                        FontFamily="Consolas"
+                        BackgroundColor="Transparent"
+                        TextColor="{AppThemeBinding Light=Black, Dark=LightGray}"
+                        AutoSize="Disabled"
+                        IsReadOnly="True"
+                        VerticalOptions="Start"
+                        HorizontalOptions="Fill"
+                        WidthRequest="1000"
+                        HeightRequest="800" />
+            </ScrollView>
+        </Border>
+
+        <!-- ⚠️ Skipped Folder Log -->
+        <Border Grid.Row="3"
+                StrokeShape="RoundRectangle 6"
+                Stroke="{AppThemeBinding Light=#cc0000, Dark=#aa0000}"
+                Background="{AppThemeBinding Light=#fff0f0, Dark=#2a0000}"
+                Padding="6"
+                Margin="0,8,0,0"
+                VerticalOptions="Start"
+                HorizontalOptions="Fill">
+            <VerticalStackLayout Spacing="4">
+                <Label Text="Skipped Folders (due to access issues):"
+                       FontAttributes="Bold"
+                       TextColor="{AppThemeBinding Light=DarkRed, Dark=LightCoral}" />
+
+                <Editor Text="{Binding SkippedPathsLog}"
+                        FontFamily="Consolas"
+                        BackgroundColor="Transparent"
+                        TextColor="{AppThemeBinding Light=DarkRed, Dark=LightCoral}"
+                        AutoSize="TextChanges"
+                        IsReadOnly="True"
+                        HeightRequest="120" />
+            </VerticalStackLayout>
+        </Border>
+
+    </Grid>
+</ContentView>

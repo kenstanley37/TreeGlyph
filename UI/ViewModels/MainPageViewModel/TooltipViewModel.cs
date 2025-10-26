@@ -4,6 +4,8 @@ namespace UI.ViewModels.MainPageViewModel;
 
 public partial class TooltipViewModel : ObservableObject
 {
+    public MainViewModel? Parent { get; set; }
+
     private bool isTooltipOpen;
     public bool IsTooltipOpen
     {

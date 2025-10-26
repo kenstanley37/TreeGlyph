@@ -1,0 +1,28 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- 📂 Default Entry -->
+    <Style x:Key="DefaultEntryStyle" TargetType="Entry">
+        <Setter Property="FontSize" Value="{StaticResource FontSizeNormal}" />
+        <Setter Property="TextColor" Value="{StaticResource TextDark}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="PlaceholderColor" Value="Gray" />
+        <Setter Property="Margin" Value="{StaticResource ControlMargin}" />
+        <Setter Property="HeightRequest" Value="36" />
+        <Setter Property="HorizontalOptions" Value="Fill" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+    <!-- 🚫 Error Entry -->
+    <Style x:Key="ErrorEntryStyle" TargetType="Entry">
+        <Setter Property="FontSize" Value="{StaticResource FontSizeNormal}" />
+        <Setter Property="TextColor" Value="{StaticResource ErrorColor}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="PlaceholderColor" Value="{StaticResource ErrorColor}" />
+        <Setter Property="Margin" Value="{StaticResource ControlMargin}" />
+        <Setter Property="HeightRequest" Value="36" />
+        <Setter Property="HorizontalOptions" Value="Fill" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+</ResourceDictionary>

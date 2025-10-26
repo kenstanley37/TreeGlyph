@@ -1,0 +1,39 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- 📝 Read-Only Preview Editor -->
+    <Style x:Key="ReadOnlyEditorStyle" TargetType="Editor">
+        <Setter Property="FontFamily" Value="Consolas" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeNormal}" />
+        <Setter Property="BackgroundColor">
+            <Setter.Value>
+                <AppThemeBinding Light="{StaticResource BackgroundLight}" Dark="#2a2a2a" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="TextColor">
+            <Setter.Value>
+                <AppThemeBinding Light="{StaticResource TextLight}" Dark="{StaticResource TextDark}" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="IsReadOnly" Value="True" />
+        <Setter Property="AutoSize" Value="TextChanges" />
+        <!-- ✅ Allows dynamic height -->
+        <Setter Property="VerticalOptions" Value="Fill" />
+        <!-- ✅ Allows full vertical stretch -->
+        <Setter Property="HorizontalOptions" Value="Fill" />
+        <!-- ✅ Adds internal breathing room -->
+        <!-- Removed Margin and HeightRequest to avoid clipping -->
+    </Style>
+
+    <!-- 🚫 Skipped Folder Log Editor -->
+    <Style x:Key="ErrorEditorStyle" TargetType="Editor">
+        <Setter Property="FontFamily" Value="Consolas" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeSmall}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="TextColor" Value="{StaticResource ErrorColor}" />
+        <Setter Property="IsReadOnly" Value="True" />
+        <Setter Property="AutoSize" Value="TextChanges" />
+        <Setter Property="HeightRequest" Value="120" />
+    </Style>
+
+</ResourceDictionary>

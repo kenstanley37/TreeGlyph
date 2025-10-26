@@ -3,10 +3,8 @@ using UI;
 using Core.Services;
 using UI.Services;
 using CommunityToolkit.Maui;
-using Platforms.Windows;
 using UI.ViewModels.MainPageViewModel;
-
-
+using UI.Platforms.Windows.Services;
 
 #if WINDOWS
 using UI.Platforms.Windows;
@@ -36,6 +34,7 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
 
+
 #if DEBUG
         builder.Logging.AddDebug();
 #endif
@@ -48,8 +47,11 @@ public static class MauiProgram
 
 
 #if WINDOWS
-        builder.Services.AddSingleton<IFolderPickerService, FolderPickerService>();
+        builder.Services.AddSingleton<IFolderPickerService, WindowsFolderPickerService>();
+#else
+builder.Services.AddSingleton<IFolderPickerService, DefaultFolderPickerService>();
 #endif
+
 #if WINDOWS
         Microsoft.Maui.Handlers.EditorHandler.Mapper.AppendToMapping("ForceWindowsScroll", (handler, view) =>
         {

@@ -1,0 +1,92 @@
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:UI.Controls;assembly=UI"
+             xmlns:views="clr-namespace:UI.Views.MainPageViews"
+             xmlns:vm="clr-namespace:UI.ViewModels.MainPageViewModel"
+             x:Class="UI.Views.MainPageViews.MainPage"
+             x:DataType="vm:MainViewModel"
+             BackgroundColor="{AppThemeBinding Light=White, Dark=Black}">
+
+    <Grid RowDefinitions="Auto,*">
+
+        <!-- 🔧 Toolbar + Status -->
+        <VerticalStackLayout Grid.Row="0" Spacing="8" Padding="16,12,16,8">
+
+            <!-- 🛠 Toolbar -->
+            <views:ToolbarView ViewModel="{Binding Toolbar}" />
+
+            <!-- ⏱ Status Panel -->
+            <Border IsVisible="{Binding IsBusy}"
+                    Stroke="{AppThemeBinding Light=#ccc, Dark=#444}"
+                    StrokeShape="RoundRectangle 6"
+                    BackgroundColor="{AppThemeBinding Light=#f5f5f5, Dark=#1c1c1c}"
+                    Padding="12"
+                    Margin="0,4,0,0">
+
+                <VerticalStackLayout Spacing="6">
+
+                    <Label Text="Building tree..."
+                           FontAttributes="Italic"
+                           FontSize="13"
+                           TextColor="{AppThemeBinding Light=Gray, Dark=LightGray}"
+                           HorizontalOptions="Center" />
+
+                    <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="12">
+
+                        <!-- 📊 Progress Bar -->
+                        <ProgressBar Grid.Column="0"
+                                     Progress="{Binding Progress}"
+                                     HeightRequest="6"
+                                     BackgroundColor="{AppThemeBinding Light=#ddd, Dark=#333}"
+                                     HorizontalOptions="Fill"
+                                     VerticalOptions="Center" />
+
+                        <!-- ❌ Cancel Button -->
+                        <Button Grid.Column="2"
+                                Text="Cancel"
+                                Command="{Binding CancelTreeBuildCommand}"
+                                Style="{StaticResource NavButtonStyle}"
+                                VerticalOptions="Center"
+                                Padding="10,4" />
+                    </Grid>
+
+                </VerticalStackLayout>
+            </Border>
+
+        </VerticalStackLayout>
+
+        <!-- 🧩 Main Layout -->
+        <controls:HorizontalSplitterView Grid.Row="1">
+
+            <controls:HorizontalSplitterView.Panel1Content>
+                <Grid HorizontalOptions="Fill">
+                    <views:FolderPanelView ViewModel="{Binding FolderPanel}" />
+                </Grid>
+            </controls:HorizontalSplitterView.Panel1Content>
+
+
+            <controls:HorizontalSplitterView.Panel2Content>
+                <Grid ColumnDefinitions="2*,1*"
+                      ColumnSpacing="16"
+                      Padding="16"
+                      HorizontalOptions="Fill"
+                      VerticalOptions="Fill">
+
+                    <!-- 🌲 Tree Preview -->
+                    <Grid Grid.Column="0" HorizontalOptions="Fill" VerticalOptions="Fill">
+                        <views:TreePreviewView ViewModel="{Binding TreePreview}" HorizontalOptions="Fill" VerticalOptions="Fill" />
+                    </Grid>
+
+                    <!-- ⚙️ Options Panel -->
+                    <Grid Grid.Column="1" HorizontalOptions="Fill" VerticalOptions="Fill">
+                        <views:OptionsDrawerView ViewModel="{Binding OptionsPanel}" HorizontalOptions="Fill" VerticalOptions="Fill" />
+                    </Grid>
+
+                </Grid>
+            </controls:HorizontalSplitterView.Panel2Content>
+
+        </controls:HorizontalSplitterView>
+
+    </Grid>
+
+</ContentPage>

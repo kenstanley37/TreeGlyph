@@ -1,0 +1,68 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:UI.ViewModels.UtilityViewModels"
+             xmlns:vm="clr-namespace:UI.ViewModels.UtilityViewModels"
+             xmlns:sys="clr-namespace:System;assembly=netstandard"
+             x:Class="UI.Views.LogViewPage"
+             x:DataType="viewmodels:LogViewModel">
+
+    <Grid RowDefinitions="Auto,Auto,Auto,Auto,*"  Padding="20" RowSpacing="12">
+
+        <!-- 📁 Log File Buttons -->
+        <CollectionView Grid.Row="0" ItemsSource="{Binding AvailableLogDates}" SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="sys:DateTime">
+                    <HorizontalStackLayout HorizontalOptions="Center">
+                        <Button Text="{Binding StringFormat='{}{0:MM/dd/yyyy}'}"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:LogViewModel}}, Path=LoadKeysCommand}"
+                                CommandParameter="{Binding}"
+                                WidthRequest="200"
+                                Margin="0,4"
+                                HorizontalOptions="Center" />
+                    </HorizontalStackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- 🧩 Unique Keys from Selected Log -->
+        <FlexLayout Grid.Row="1" Wrap="Wrap" Direction="Row" JustifyContent="Start" AlignItems="Center"
+                    BindableLayout.ItemsSource="{Binding AvailableKeys}">
+            <BindableLayout.ItemTemplate>
+                <DataTemplate x:DataType="x:String">
+                    <Grid ColumnDefinitions="50,160" Padding="1" Margin="1">
+                        <CheckBox
+                            Grid.Column="0"
+                            IsChecked="{Binding IsSelected}"
+                            CheckedChanged="OnCategoryCheckedChanged" />
+                        <Label Grid.Column="1"
+                               Text="{Binding}"
+                               TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                               VerticalTextAlignment="Center"
+                               Padding="0"
+                               Margin="2,0,0,0" />
+                    </Grid>
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+        </FlexLayout>
+
+        <!-- 🔍 Search -->
+        <SearchBar Grid.Row="2" Placeholder="Search logs..." Text="{Binding SearchText}" />
+
+        <!-- 📥 Load Logs -->
+        <Button Grid.Row="3" Text="Load Logs" Command="{Binding LoadLogsCommand}" />
+
+        <!-- 📄 Filtered Log Output -->
+        <CollectionView Grid.Row="4" ItemsSource="{Binding FilteredLogs}" VerticalOptions="Fill">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="x:String">
+                    <Label Text="{Binding}"
+                           FontFamily="Consolas"
+                           FontSize="12"
+                           TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                           LineBreakMode="WordWrap" />
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </Grid>
+</ContentPage>

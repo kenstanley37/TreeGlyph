@@ -18,16 +18,27 @@
             <!-- 🎨 App Theme Resources -->
 
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
-                <ResourceDictionary Source="Resources/Styles/Buttons.xaml" />
-                <ResourceDictionary Source="Resources/Styles/Text.xaml" />
-                <ResourceDictionary Source="Resources/Styles/Inputs.xaml" />
-                <ResourceDictionary Source="Resources/Styles/Containers.xaml" />
-                <ResourceDictionary Source="Resources/Styles/Pages.xaml" />
-                <ResourceDictionary Source="Resources/Styles/Indicators.xaml" />
-                <ResourceDictionary Source="Resources/Styles/Shadows.xaml" />
-            </ResourceDictionary.MergedDictionaries>
+                <!-- 🎨 Theme and Color System -->
+                <ResourceDictionary Source="Resources/Styles/ThemeColors.xaml" />
 
+                <!-- 🔠 Typography and Layout -->
+                <ResourceDictionary Source="Resources/Styles/FontSizes.xaml" />
+                <ResourceDictionary Source="Resources/Styles/LayoutSpacing.xaml" />
+
+                <!-- 🧱 Component Styles -->
+                <ResourceDictionary Source="Resources/Styles/ButtonStyles.xaml" />
+                <ResourceDictionary Source="Resources/Styles/BorderStyles.xaml" />
+                <ResourceDictionary Source="Resources/Styles/EditorStyles.xaml" />
+                <ResourceDictionary Source="Resources/Styles/LabelStyles.xaml" />
+                <ResourceDictionary Source="Resources/Styles/EntryStyles.xaml" />
+                <ResourceDictionary Source="Resources/Styles/SwitchStyles.xaml" />
+                <ResourceDictionary Source="Resources/Styles/ModalStyles.xaml" />
+                <ResourceDictionary Source="Resources/Styles/SliderStyles.xaml" />
+                <ResourceDictionary>
+                    <local:CategorySelectionConverter x:Key="CategorySelectionConverter" />
+                </ResourceDictionary>
+
+            </ResourceDictionary.MergedDictionaries>
 
         </ResourceDictionary>
     </Application.Resources>

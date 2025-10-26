@@ -1,0 +1,28 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- 🧾 Default Label -->
+    <Style x:Key="DefaultLabelStyle" TargetType="Label">
+        <Setter Property="FontSize" Value="{StaticResource FontSizeNormal}" />
+        <Setter Property="TextColor" Value="{StaticResource TextDark}" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="HorizontalOptions" Value="Start" />
+    </Style>
+
+    <!-- 🏷 Section Header -->
+    <Style x:Key="SectionHeaderStyle" TargetType="Label">
+        <Setter Property="FontSize" Value="{StaticResource FontSizeMedium}" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="TextColor" Value="{StaticResource AccentColor}" />
+        <Setter Property="Margin" Value="0,4,0,2" />
+    </Style>
+
+    <!-- ⚠️ Warning Label -->
+    <Style x:Key="WarningLabelStyle" TargetType="Label">
+        <Setter Property="FontSize" Value="{StaticResource FontSizeSmall}" />
+        <Setter Property="TextColor" Value="{StaticResource ErrorColor}" />
+        <Setter Property="FontAttributes" Value="Italic" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+    </Style>
+
+</ResourceDictionary>
