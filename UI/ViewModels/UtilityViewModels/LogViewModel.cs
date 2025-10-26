@@ -5,7 +5,6 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
-using UI.Services;
 
 namespace UI.ViewModels.UtilityViewModels;
 
@@ -129,14 +128,17 @@ public partial class LogViewModel : ObservableObject
                 foreach (var cat in SelectedCategories)
                 {
                     if (line.Contains(cat, StringComparison.OrdinalIgnoreCase))
-                        DebugLogger.WriteLine($"[Match] Line matched category '{cat}': {line}");
+                    {
+                        //DebugLogger.WriteLine($"[Match] Line matched category '{cat}': {line}");
+                    }
+
                 }
             }
 
 
-            DebugLogger.WriteLine($"[LoadLogs] Categories: {(SelectedCategories == null ? "null" : string.Join(", ", SelectedCategories))}");
-            DebugLogger.WriteLine($"[LoadLogs] SearchText: {SearchText}");
-            DebugLogger.WriteLine($"[LoadLogs] Filtered count: {filtered.Count}");
+            //DebugLogger.WriteLine($"[LoadLogs] Categories: {(SelectedCategories == null ? "null" : string.Join(", ", SelectedCategories))}");
+            //DebugLogger.WriteLine($"[LoadLogs] SearchText: {SearchText}");
+            //DebugLogger.WriteLine($"[LoadLogs] Filtered count: {filtered.Count}");
         }
 
         FilteredLogs = new ObservableCollection<string>(filtered);
@@ -154,6 +156,6 @@ public partial class LogViewModel : ObservableObject
         else
             SelectedCategories.Add(category);
 
-        DebugLogger.WriteLine($"[ToggleCategory] SelectedCategories = {string.Join(", ", SelectedCategories)}");
+        //DebugLogger.WriteLine($"[ToggleCategory] SelectedCategories = {string.Join(", ", SelectedCategories)}");
     }
 }
