@@ -6,12 +6,18 @@
     <PublisherDisplayName>Kenneth Stanley</PublisherDisplayName>
     <Version>1.0.0.0</Version>
     <GenerateAppInstallerFile>false</GenerateAppInstallerFile>
+	
+	<!-- Kens Added Stuff to remove warnings -->
+	<GenerateSymbolsPackage>false</GenerateSymbolsPackage>
+	<MauiEnableXamlCBindingWithSourceCompilation>true</MauiEnableXamlCBindingWithSourceCompilation>
+
 
     <!-- Framework & Runtime -->
-    <TargetFrameworks>net9.0-windows10.0.19041.0</TargetFrameworks>
-    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
-    <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <TargetFramework>net9.0-windows10.0.19041.0</TargetFramework>
+	<RuntimeIdentifier>win-x64</RuntimeIdentifier>
+	<WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
+	<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+
 
     <!-- MAUI -->
     <UseMaui>true</UseMaui>

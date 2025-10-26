@@ -3,45 +3,60 @@
              xmlns:viewmodels="clr-namespace:UI.ViewModels.UtilityViewModels"
              xmlns:vm="clr-namespace:UI.ViewModels.UtilityViewModels"
              xmlns:sys="clr-namespace:System;assembly=netstandard"
+             xmlns:models="clr-namespace:UI.ViewModels.UtilityViewModels"
              x:Class="UI.Views.LogViewPage"
              x:DataType="viewmodels:LogViewModel">
 
     <Grid RowDefinitions="Auto,Auto,Auto,Auto,*"  Padding="20" RowSpacing="12">
 
         <!-- 📁 Log File Buttons -->
-        <CollectionView Grid.Row="0" ItemsSource="{Binding AvailableLogDates}" SelectionMode="None">
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="sys:DateTime">
-                    <HorizontalStackLayout HorizontalOptions="Center">
-                        <Button Text="{Binding StringFormat='{}{0:MM/dd/yyyy}'}"
-                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:LogViewModel}}, Path=LoadKeysCommand}"
-                                CommandParameter="{Binding}"
-                                WidthRequest="200"
-                                Margin="0,4"
-                                HorizontalOptions="Center" />
-                    </HorizontalStackLayout>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
+        <CollectionView Grid.Row="0"
+                ItemsSource="{Binding AvailableLogDates}"
+                SelectionMode="None">
+          <CollectionView.ItemTemplate>
+            <DataTemplate x:DataType="models:LogDateItem">
+              <HorizontalStackLayout HorizontalOptions="Center">
+                <Button Text="{Binding Date, StringFormat='{}{0:MM/dd/yyyy}'}"
+                        Command="{Binding LoadKeysCommand}"
+                        WidthRequest="200"
+                        Margin="0,4"
+                        HorizontalOptions="Center" />
+              </HorizontalStackLayout>
+            </DataTemplate>
+          </CollectionView.ItemTemplate>
         </CollectionView>
 
+      <HorizontalStackLayout Margin="0,8" HorizontalOptions="Start">
+        <CheckBox x:Name="SelectAllCheckBox"
+                  IsChecked="{Binding IsAllKeysSelected, Mode=TwoWay}"
+                  CheckedChanged="OnSelectAllCheckedChanged" />
+        <Label Text="Select All"
+               VerticalTextAlignment="Center"
+               Margin="6,0,0,0"
+               TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+      </HorizontalStackLayout>
+      
         <!-- 🧩 Unique Keys from Selected Log -->
         <FlexLayout Grid.Row="1" Wrap="Wrap" Direction="Row" JustifyContent="Start" AlignItems="Center"
                     BindableLayout.ItemsSource="{Binding AvailableKeys}">
             <BindableLayout.ItemTemplate>
-                <DataTemplate x:DataType="x:String">
-                    <Grid ColumnDefinitions="50,160" Padding="1" Margin="1">
-                        <CheckBox
-                            Grid.Column="0"
+              <DataTemplate x:DataType="models:SelectableKeyItem">
+                <Grid ColumnDefinitions="50,160"
+                      Padding="1"
+                      Margin="1"
+                      BackgroundColor="{Binding BackgroundColor}">
+                  <CheckBox Grid.Column="0"
                             IsChecked="{Binding IsSelected}"
                             CheckedChanged="OnCategoryCheckedChanged" />
-                        <Label Grid.Column="1"
-                               Text="{Binding}"
-                               TextColor="{AppThemeBinding Light=Black, Dark=White}"
-                               VerticalTextAlignment="Center"
-                               Padding="0"
-                               Margin="2,0,0,0" />
-                    </Grid>
-                </DataTemplate>
+                  <Label Grid.Column="1"
+                         Text="{Binding Key}"
+                         TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                         VerticalTextAlignment="Center"
+                         Padding="0"
+                         Margin="2,0,0,0" />
+                </Grid>
+              </DataTemplate>
+
             </BindableLayout.ItemTemplate>
         </FlexLayout>
 

@@ -35,8 +35,7 @@ public partial class LogViewModel : ObservableObject
         set => SetProperty(ref searchText, value);
     }
 
-    public ObservableCollection<DateTime> AvailableLogDates { get; } = new();
-    public ObservableCollection<string> AvailableKeys { get; } = new();
+    //public ObservableCollection<string> AvailableKeys { get; } = new();
 
     private ObservableCollection<string> selectedCategories = new();
     public ObservableCollection<string> SelectedCategories
@@ -57,6 +56,9 @@ public partial class LogViewModel : ObservableObject
         set => SetProperty(ref filteredLogs, value);
     }
 
+    public ObservableCollection<SelectableKeyItem> AvailableKeys { get; } = new();
+    public ObservableCollection<LogDateItem> AvailableLogDates { get; } = new();
+
     public void LoadAvailableDates()
     {
         AvailableLogDates.Clear();
@@ -68,8 +70,32 @@ public partial class LogViewModel : ObservableObject
             var name = Path.GetFileNameWithoutExtension(file);
             if (DateTime.TryParseExact(name.Replace("exclusion-log-", ""), "yyyy-MM-dd", null, DateTimeStyles.None, out var date))
             {
-                AvailableLogDates.Add(date);
+                AvailableLogDates.Add(new LogDateItem(date, LoadKeysForDate));
             }
+        }
+    }
+
+    private bool isAllKeysSelected;
+    public bool IsAllKeysSelected
+    {
+        get => isAllKeysSelected;
+        set
+        {
+            if (SetProperty(ref isAllKeysSelected, value))
+            {
+                foreach (var key in AvailableKeys)
+                    key.IsSelected = value;
+            }
+        }
+    }
+
+    public ICommand SelectAllKeysCommand => new RelayCommand(SelectAllKeys);
+
+    private void SelectAllKeys()
+    {
+        foreach (var keyItem in AvailableKeys)
+        {
+            keyItem.IsSelected = true;
         }
     }
 
@@ -94,7 +120,7 @@ public partial class LogViewModel : ObservableObject
 
 
         foreach (var key in keys)
-            AvailableKeys.Add(key);
+            AvailableKeys.Add(new SelectableKeyItem(key));
     }
 
     public async Task LoadLogsAsync()
@@ -147,7 +173,7 @@ public partial class LogViewModel : ObservableObject
 
     public ICommand ToggleCategoryCommand => new RelayCommand<string>(ToggleCategory);
 
-    private void ToggleCategory(string category)
+    private void ToggleCategory(string? category)
     {
         if (string.IsNullOrWhiteSpace(category)) return;
 
