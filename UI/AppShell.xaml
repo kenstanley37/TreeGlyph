@@ -6,7 +6,11 @@
     xmlns:mainviews="clr-namespace:TreeGlyph.UI.Views.MainPageViews"
     Title="TreeGlyph"
     FlyoutBackgroundColor="{AppThemeBinding Light=White, Dark=#111}"
-    FlyoutBehavior="Flyout">
+    FlyoutBehavior="Flyout"
+    BackgroundColor="{StaticResource BaseBackground}"
+    TitleColor="{StaticResource BaseForeground}"
+    UnselectedColor="{StaticResource MutedForeground}"
+    >
 
     <Shell.Resources>
         <Style TargetType="Label">

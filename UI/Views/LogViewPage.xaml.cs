@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using TreeGlyph.UI.Services;
 using TreeGlyph.UI.ViewModels.UtilityViewModels;
 
@@ -5,10 +6,13 @@ namespace TreeGlyph.UI.Views;
 
 public partial class LogViewPage : ContentPage
 {
+    private LogViewModel viewModel;
+
     public LogViewPage()
     {
         InitializeComponent();
-        BindingContext = new LogViewModel();
+        viewModel = new LogViewModel();
+        BindingContext = viewModel;
     }
 
     private void OnCategoryCheckedChanged(object sender, CheckedChangedEventArgs e)
@@ -41,4 +45,21 @@ public partial class LogViewPage : ContentPage
             DebugLogger.WriteLine($"[SelectAll] Toggled to: {e.Value}");
         }
     }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        viewModel.PropertyChanged += OnViewModelPropertyChanged;
+    }
+
+    private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(viewModel.FullLogText))
+        {
+            LogEditor.Text = viewModel.FullLogText;
+            LogEditor.CursorPosition = viewModel.FullLogText.Length;
+        }
+    }
+
+
 }

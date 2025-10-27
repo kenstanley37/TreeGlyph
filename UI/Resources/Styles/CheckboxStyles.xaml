@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<?xaml-comp compile="true" ?>
+<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- ☑️ Standard Checkbox -->
+    <Style x:Key="StandardCheckbox" TargetType="CheckBox">
+        <Setter Property="Color" Value="{StaticResource AccentColor}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="HeightRequest" Value="24" />
+        <Setter Property="WidthRequest" Value="24" />
+        <Setter Property="Margin" Value="0,0,6,0" />
+    </Style>
+
+    <!-- 🔘 Toggle Switch -->
+    <Style x:Key="StandardSwitch" TargetType="Switch">
+        <Setter Property="OnColor" Value="{StaticResource AccentColor}" />
+        <Setter Property="ThumbColor" Value="{StaticResource BaseForeground}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="HeightRequest" Value="32" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+
+    <!-- 🧪 Diagnostic Toggle -->
+    <Style x:Key="DiagnosticSwitch" TargetType="Switch">
+        <Setter Property="OnColor" Value="{StaticResource WarningColor}" />
+        <Setter Property="ThumbColor" Value="{StaticResource BaseForeground}" />
+        <Setter Property="BackgroundColor" Value="{StaticResource DividerColor}" />
+        <Setter Property="Margin" Value="0,0,6,0" />
+    </Style>
+
+</ResourceDictionary>

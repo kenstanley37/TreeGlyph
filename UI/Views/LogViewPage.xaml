@@ -4,10 +4,20 @@
              xmlns:vm="clr-namespace:TreeGlyph.UI.ViewModels.UtilityViewModels"
              xmlns:sys="clr-namespace:System;assembly=netstandard"
              xmlns:models="clr-namespace:TreeGlyph.UI.ViewModels.UtilityViewModels"
+             xmlns:converters="clr-namespace:TreeGlyph.UI.Converters"
              x:Class="TreeGlyph.UI.Views.LogViewPage"
              Padding="0"
              Shell.NavBarIsVisible="False"
-             x:DataType="viewmodels:LogViewModel">
+             x:DataType="viewmodels:LogViewModel"
+             BackgroundColor="{StaticResource BaseBackground}">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:BoolToOpacityConverter x:Key="BoolToOpacityConverter"
+                                               TrueOpacity="1.0"
+                                               FalseOpacity="0.0" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <Grid RowDefinitions="Auto,Auto,*"
           Padding="20"
@@ -15,104 +25,166 @@
 
         <!-- 🔼 Top Section: Controls + Keys -->
         <Grid Grid.Row="0"
-              ColumnDefinitions="Auto,*"
+              ColumnDefinitions="Auto,1,*"
               ColumnSpacing="16">
 
-            <!-- 🟦 Left Panel: Log Date Picker + Select All -->
-            <VerticalStackLayout Grid.Column="0"
-                                 Spacing="12"
-                                 WidthRequest="260"
-                                 VerticalOptions="Start">
+            <!-- 🟦 Left Panel -->
+            <Grid Grid.Column="0"
+                  BackgroundColor="{StaticResource PanelBackground}"
+                  Padding="12"
+                  Margin="0,0,0,12"
+                  RowDefinitions="Auto,*">
 
-                <Picker Title="Select a log date"
-                        ItemsSource="{Binding AvailableLogDates}"
-                        ItemDisplayBinding="{Binding Date, StringFormat='{}{0:MM/dd/yyyy}'}"
-                        SelectedItem="{Binding SelectedLogDate, Mode=TwoWay}"
-                        WidthRequest="240" />
+                <!-- Accent Header -->
+                <BoxView Grid.Row="0"
+                         HeightRequest="2"
+                         BackgroundColor="{StaticResource AccentColor}"
+                         HorizontalOptions="Fill" />
 
-                <HorizontalStackLayout>
-                    <CheckBox x:Name="SelectAllCheckBox"
-                              IsChecked="{Binding IsAllKeysSelected, Mode=TwoWay}"
-                              CheckedChanged="OnSelectAllCheckedChanged" />
-                    <Label Text="Select All"
-                           VerticalTextAlignment="Center"
-                           Margin="6,0,0,0"
-                           TextColor="{AppThemeBinding Light=Black, Dark=White}" />
-                </HorizontalStackLayout>
+                <VerticalStackLayout Grid.Row="1"
+                                     Spacing="16"
+                                     VerticalOptions="Start">
 
-                <SearchBar Placeholder="Search logs..."
-                           Text="{Binding SearchText}"
-                           WidthRequest="240" />
+                    <Label Text="Log Filters"
+                           FontSize="14"
+                           FontAttributes="Bold"
+                           TextColor="{StaticResource AccentColor}"
+                           Margin="0,0,0,6" />
 
-                <Button Text="Load Logs"
-                        Command="{Binding LoadLogsCommand}"
-                        WidthRequest="240" />
-            </VerticalStackLayout>
+                    <Picker Title="Select a log date"
+                            ItemsSource="{Binding AvailableLogDates}"
+                            ItemDisplayBinding="{Binding Date, StringFormat='{}{0:MM/dd/yyyy}'}"
+                            SelectedItem="{Binding SelectedLogDate, Mode=TwoWay}"
+                            Style="{StaticResource DatePicker}"
+                            WidthRequest="240" />
 
-            <!-- 🟨 Right Panel: Unique Keys from Selected Log -->
-            <ScrollView Grid.Column="1"
-                        Orientation="Vertical"
-                        Padding="0"
-                        Margin="0">
+                    <HorizontalStackLayout>
+                        <CheckBox x:Name="SelectAllCheckBox"
+                                  IsChecked="{Binding IsAllKeysSelected, Mode=TwoWay}"
+                                  Style="{StaticResource CheckBox}"
+                                  CheckedChanged="OnSelectAllCheckedChanged" />
+                        <Label Text="Select All"
+                               VerticalTextAlignment="Center"
+                               Margin="6,0,0,0"
+                               TextColor="{StaticResource MutedForeground}" />
+                    </HorizontalStackLayout>
 
-                <FlexLayout Wrap="Wrap"
-                            Direction="Row"
-                            JustifyContent="Start"
-                            AlignItems="Start"
-                            BindableLayout.ItemsSource="{Binding AvailableKeys}">
+                    <SearchBar Placeholder="Search logs..."
+                               Text="{Binding SearchText}"
+                               WidthRequest="240" />
 
-                    <BindableLayout.ItemTemplate>
-                        <DataTemplate x:DataType="models:SelectableKeyItem">
-                            <Grid ColumnDefinitions="50,160"
-                                  Padding="0"
-                                  Margin="2,2,2,0"
-                                  BackgroundColor="{Binding BackgroundColor}">
+                    <Button Text="Load Logs"
+                            Command="{Binding LoadLogsCommand}"
+                            IsEnabled="{Binding CanLoadLogs}"
+                            Style="{StaticResource AccentButton}"
+                            WidthRequest="240" />
+                </VerticalStackLayout>
+            </Grid>
 
-                                <CheckBox Grid.Column="0"
-                                          IsChecked="{Binding IsSelected}"
-                                          CheckedChanged="OnCategoryCheckedChanged"
-                                          Margin="0" />
+            <!-- 🧱 Vertical Divider -->
+            <BoxView Grid.Column="1"
+                     WidthRequest="1"
+                     BackgroundColor="{StaticResource DividerColor}"
+                     VerticalOptions="FillAndExpand"
+                     Margin="0,4" />
 
-                                <Label Grid.Column="1"
-                                       Text="{Binding Key}"
-                                       TextColor="{AppThemeBinding Light=Black, Dark=White}"
-                                       VerticalTextAlignment="Center"
-                                       Padding="0"
-                                       Margin="2,0,0,0" />
-                            </Grid>
-                        </DataTemplate>
-                    </BindableLayout.ItemTemplate>
-                </FlexLayout>
-            </ScrollView>
+            <!-- 🟨 Right Panel -->
+            <Grid Grid.Column="2"
+                  BackgroundColor="{StaticResource PanelBackground}"
+                  Padding="12"
+                  Margin="0,0,0,12"
+                  RowDefinitions="Auto,*">
+
+                <!-- Accent Header -->
+                <BoxView Grid.Row="0"
+                         HeightRequest="2"
+                         BackgroundColor="{StaticResource AccentColor}"
+                         HorizontalOptions="Fill" />
+
+                <ScrollView Grid.Row="1"
+                            Orientation="Vertical"
+                            Margin="0">
+
+                    <VerticalStackLayout Spacing="16">
+
+                        <Label Text="Available Keys"
+                               FontSize="14"
+                               FontAttributes="Bold"
+                               TextColor="{StaticResource AccentColor}"
+                               Margin="0,0,0,6" />
+
+                        <FlexLayout Wrap="Wrap"
+                                    Direction="Row"
+                                    JustifyContent="Start"
+                                    AlignItems="Start"
+                                    BindableLayout.ItemsSource="{Binding AvailableKeys}"
+                                    Margin="0,6,0,0">
+
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="models:SelectableKeyItem">
+                                    <Grid ColumnDefinitions="50,160"
+                                          Padding="0"
+                                          Margin="2,2,2,0"
+                                          BackgroundColor="{Binding BackgroundColor}">
+
+                                        <CheckBox Grid.Column="0"
+                                                  IsChecked="{Binding IsSelected}"
+                                                  CheckedChanged="OnCategoryCheckedChanged"
+                                                  Margin="0" />
+
+                                        <Label Grid.Column="1"
+                                               Text="{Binding Key}"
+                                               TextColor="{StaticResource MutedForeground}"
+                                               VerticalTextAlignment="Center"
+                                               Padding="0"
+                                               Margin="2,0,0,0" />
+                                    </Grid>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </FlexLayout>
+                    </VerticalStackLayout>
+                </ScrollView>
+            </Grid>
         </Grid>
 
-        <!-- 🔳 Divider -->
+        <!-- 🔳 Horizontal Divider -->
         <BoxView Grid.Row="1"
-                 Grid.ColumnSpan="2"
+                 Grid.ColumnSpan="3"
                  HeightRequest="1"
-                 BackgroundColor="{AppThemeBinding Light=#CCC, Dark=#444}"
+                 BackgroundColor="{StaticResource DividerColor}"
                  Margin="0,6" />
 
-        <!-- 🔽 Bottom Section: Filtered Log Output -->
-        <CollectionView Grid.Row="2"
-                ItemsSource="{Binding FilteredLogs}"
-                BackgroundColor="#000"
-                VerticalOptions="Fill">
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="x:String">
-                    <Editor Text="{Binding}"
-                            FontFamily="Consolas"
-                            FontSize="12"
-                            TextColor="{AppThemeBinding Light=White, Dark=White}"
-                            BackgroundColor="Transparent"
-                            IsReadOnly="True"
-                            AutoSize="TextChanges"
-                            Margin="0"
-                             />
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+        <!-- 🔽 Bottom Section: Log Viewer -->
+        <Grid Grid.Row="2"
+              Margin="0">
 
+            <!-- Gradient Background -->
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="{StaticResource EditorBackground}" Offset="0.0" />
+                    <GradientStop Color="#181818" Offset="1.0" />
+                </LinearGradientBrush>
+            </Grid.Background>
 
+            <Editor x:Name="LogEditor"
+                    Style="{StaticResource LogEditorStyle}" />
+
+            <VerticalStackLayout IsVisible="{Binding IsBusy}"
+                                 Opacity="{Binding IsBusy, Converter={StaticResource BoolToOpacityConverter}}"
+                                 HorizontalOptions="Center"
+                                 VerticalOptions="Center"
+                                 ZIndex="999"
+                                 Spacing="12">
+                <ActivityIndicator IsRunning="True"
+                                   Color="{StaticResource BaseForeground}"
+                                   WidthRequest="40"
+                                   HeightRequest="40" />
+                <Label Text="Loading logs..."
+                       TextColor="{StaticResource BaseForeground}"
+                       FontSize="14"
+                       FontAttributes="Bold"
+                       HorizontalTextAlignment="Center" />
+            </VerticalStackLayout>
+        </Grid>
     </Grid>
 </ContentPage>

@@ -493,4 +493,50 @@
         </Setter>
     </Style>
 
+    <!-- 🟨 Accent Button -->
+    <!-- 📝 Log Viewer Editor -->
+    <Style x:Key="LogEditorStyle" TargetType="Editor">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="TextColor" Value="{StaticResource BaseForeground}" />
+        <Setter Property="FontFamily" Value="Consolas" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="IsReadOnly" Value="True" />
+        <Setter Property="AutoSize" Value="Disabled" />
+        <Setter Property="VerticalOptions" Value="Fill" />
+        <Setter Property="HorizontalOptions" Value="Fill" />
+        <Setter Property="Margin" Value="0" />
+    </Style>
+
+    <Style x:Key="SectionHeader" TargetType="Label">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="TextColor" Value="{StaticResource AccentColor}" />
+        <Setter Property="Margin" Value="0,0,0,6" />
+    </Style>
+
+    <Style x:Key="TextEntry" TargetType="Entry">
+        <Setter Property="BackgroundColor" Value="{StaticResource PanelBackground}" />
+        <Setter Property="TextColor" Value="{StaticResource BaseForeground}" />
+        <Setter Property="PlaceholderColor" Value="{StaticResource MutedForeground}" />
+        <Setter Property="Margin" Value="0,6,0,6" />
+    </Style>
+
+    <Style x:Key="UtilityButton" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="{StaticResource PanelBackground}" />
+        <Setter Property="TextColor" Value="{StaticResource BaseForeground}" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="Padding" Value="8,4" />
+        <Setter Property="CornerRadius" Value="8" />
+        <Setter Property="BorderColor" Value="{StaticResource DividerColor}" />
+        <Setter Property="BorderWidth" Value="1" />
+    </Style>
+
+    <Style x:Key="AccentButton" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="{StaticResource AccentColor}" />
+        <Setter Property="TextColor" Value="White" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="CornerRadius" Value="6" />
+        <Setter Property="Padding" Value="12,6" />
+    </Style>
+
 </ResourceDictionary>

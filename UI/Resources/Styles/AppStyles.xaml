@@ -1,0 +1,30 @@
+﻿<!-- AppStyles.xaml -->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <ResourceDictionary.MergedDictionaries>
+        <!-- 🔘 Buttons -->
+        <ResourceDictionary Source="ButtonStyles.xaml" />
+
+        <!-- 📝 Text & Typography -->
+        <ResourceDictionary Source="TextStyles.xaml" />
+
+        <!-- 🧱 Layout & Containers -->
+        <ResourceDictionary Source="LayoutStyles.xaml" />
+        <ResourceDictionary Source="BorderStyles.xaml" />
+
+        <!-- 🧩 Controls -->
+        <ResourceDictionary Source="EditorStyles.xaml" />
+        <ResourceDictionary Source="PickerStyles.xaml" />
+        <ResourceDictionary Source="CheckboxStyles.xaml" />
+        <ResourceDictionary Source="ProgressStyles.xaml" />
+
+        <!-- 🧭 Navigation -->
+        <ResourceDictionary Source="NavigationStyles.xaml" />
+
+        <!-- 🧪 Diagnostics & Utility -->
+        <ResourceDictionary Source="LogStyles.xaml" />
+        <ResourceDictionary Source="OverlayStyles.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+</ResourceDictionary>

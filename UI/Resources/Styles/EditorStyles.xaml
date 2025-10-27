@@ -1,39 +1,45 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<?xaml-comp compile="true" ?>
+<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
-    <!-- 📝 Read-Only Preview Editor -->
-    <Style x:Key="ReadOnlyEditorStyle" TargetType="Editor">
+    <!-- 📝 Standard Editor -->
+    <Style x:Key="StandardEditor" TargetType="Editor">
+        <Setter Property="FontSize" Value="14" />
         <Setter Property="FontFamily" Value="Consolas" />
-        <Setter Property="FontSize" Value="{StaticResource FontSizeNormal}" />
-        <Setter Property="BackgroundColor">
-            <Setter.Value>
-                <AppThemeBinding Light="{StaticResource BackgroundLight}" Dark="#2a2a2a" />
-            </Setter.Value>
-        </Setter>
-        <Setter Property="TextColor">
-            <Setter.Value>
-                <AppThemeBinding Light="{StaticResource TextLight}" Dark="{StaticResource TextDark}" />
-            </Setter.Value>
-        </Setter>
-        <Setter Property="IsReadOnly" Value="True" />
-        <Setter Property="AutoSize" Value="TextChanges" />
-        <!-- ✅ Allows dynamic height -->
-        <Setter Property="VerticalOptions" Value="Fill" />
-        <!-- ✅ Allows full vertical stretch -->
+        <Setter Property="TextColor" Value="{StaticResource BaseForeground}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="PlaceholderColor" Value="{StaticResource MutedForeground}" />
+        <Setter Property="AutoSize" Value="Disabled" />
+        <Setter Property="HeightRequest" Value="72" />
+        <Setter Property="Margin" Value="0,4,0,8" />
+        <Setter Property="VerticalOptions" Value="Start" />
         <Setter Property="HorizontalOptions" Value="Fill" />
-        <!-- ✅ Adds internal breathing room -->
-        <!-- Removed Margin and HeightRequest to avoid clipping -->
     </Style>
 
-    <!-- 🚫 Skipped Folder Log Editor -->
-    <Style x:Key="ErrorEditorStyle" TargetType="Editor">
+    <!-- 🔍 Search Bar -->
+    <Style x:Key="SearchBarStyle" TargetType="SearchBar">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="TextColor" Value="{StaticResource BaseForeground}" />
+        <Setter Property="PlaceholderColor" Value="{StaticResource MutedForeground}" />
+        <Setter Property="BackgroundColor" Value="{StaticResource PanelBackground}" />
+        <Setter Property="Margin" Value="0,4,0,8" />
+        <Setter Property="HeightRequest" Value="40" />
+        <Setter Property="HorizontalOptions" Value="Fill" />
+    </Style>
+
+    <!-- 🧪 Log Viewer Editor -->
+    <Style x:Key="LogEditorStyle" TargetType="Editor">
+        <Setter Property="FontSize" Value="13" />
         <Setter Property="FontFamily" Value="Consolas" />
-        <Setter Property="FontSize" Value="{StaticResource FontSizeSmall}" />
+        <Setter Property="TextColor" Value="{StaticResource BaseForeground}" />
         <Setter Property="BackgroundColor" Value="Transparent" />
-        <Setter Property="TextColor" Value="{StaticResource ErrorColor}" />
         <Setter Property="IsReadOnly" Value="True" />
-        <Setter Property="AutoSize" Value="TextChanges" />
-        <Setter Property="HeightRequest" Value="120" />
+        <Setter Property="AutoSize" Value="Disabled" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="VerticalOptions" Value="FillAndExpand" />
+        <Setter Property="HorizontalOptions" Value="FillAndExpand" />
     </Style>
 
 </ResourceDictionary>

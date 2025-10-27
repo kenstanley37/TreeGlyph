@@ -5,7 +5,10 @@
              x:Name="Root"
              x:DataType="vm:TreePreviewViewModel">
 
-    <Grid RowDefinitions="Auto,Auto,*,Auto" RowSpacing="8" Padding="12">
+    <Grid RowDefinitions="Auto,Auto,*,Auto"
+          RowSpacing="8"
+          Padding="12"
+          BackgroundColor="{StaticResource BaseBackground}">
 
         <!-- 📋 Metrics + Copy Button Row -->
         <Grid Grid.Row="0"
@@ -20,14 +23,10 @@
                                    HorizontalOptions="Start"
                                    VerticalOptions="Center">
                 <Label Text="{Binding ElapsedTime, StringFormat='Elapsed: {0}'}"
-                       FontSize="12"
-                       TextColor="{AppThemeBinding Light=Gray, Dark=LightGray}" />
+                       Style="{StaticResource CaptionText}" />
 
                 <Label Text="{Binding MemoryUsage, StringFormat='Memory: {0}'}"
-                       FontSize="12"
-                       TextColor="{AppThemeBinding Light=Gray, Dark=LightGray}" />
-
-
+                       Style="{StaticResource CaptionText}" />
             </HorizontalStackLayout>
 
             <!-- 📋 Copy Button Right-Aligned -->
@@ -42,20 +41,18 @@
 
         <!-- 📂 Selected Folder Path -->
         <Label Grid.Row="1"
-           Text="{Binding SelectedFolderPath, StringFormat='Currently Building Tree for Folder: {0}'}"
-           FontSize="12"
-           TextColor="{AppThemeBinding Light=DarkGray, Dark=LightGray}"
-           LineBreakMode="TailTruncation"
-           MaxLines="1"
-           Margin="0,0,0,4"
-           IsVisible="{Binding HasSelectedFolder}" />
+               Text="{Binding SelectedFolderPath, StringFormat='Currently Building Tree for Folder: {0}'}"
+               Style="{StaticResource CaptionText}"
+               LineBreakMode="TailTruncation"
+               MaxLines="1"
+               Margin="0,0,0,4"
+               IsVisible="{Binding HasSelectedFolder}" />
 
         <!-- 🖼️ Preview Output -->
         <Border Grid.Row="2"
-                StrokeShape="RoundRectangle 6"
-                Stroke="{AppThemeBinding Light=#333333, Dark=#444444}"
-                Background="{AppThemeBinding Light=#f9f9f9, Dark=#121212}"
-                Padding="6"
+                Style="{StaticResource ModalContainer}"
+                Stroke="{StaticResource DividerBrush}"
+                BackgroundColor="{StaticResource EditorBackground}"
                 VerticalOptions="Fill"
                 HorizontalOptions="Fill">
             <ScrollView VerticalScrollBarVisibility="Always"
@@ -63,38 +60,30 @@
                         VerticalOptions="Fill"
                         HorizontalOptions="Fill">
                 <Editor Text="{Binding TreeOutput}"
-                        FontFamily="Consolas"
-                        BackgroundColor="Transparent"
-                        TextColor="{AppThemeBinding Light=Black, Dark=LightGray}"
-                        AutoSize="Disabled"
-                        IsReadOnly="True"
-                        VerticalOptions="Start"
-                        HorizontalOptions="Fill"
-                        WidthRequest="1000"
-                        HeightRequest="800" />
+                        Style="{StaticResource LogEditorStyle}"
+                        AutoSize="TextChanges"
+                        VerticalOptions="Fill"
+                        HorizontalOptions="Fill" />
             </ScrollView>
         </Border>
 
         <!-- ⚠️ Skipped Folder Log -->
         <Border Grid.Row="3"
-                StrokeShape="RoundRectangle 6"
-                Stroke="{AppThemeBinding Light=#cc0000, Dark=#aa0000}"
-                Background="{AppThemeBinding Light=#fff0f0, Dark=#2a0000}"
+                Stroke="{StaticResource ErrorBrush}"
+                BackgroundColor="{StaticResource OverlayBackground}"
                 Padding="6"
                 Margin="0,8,0,0"
                 VerticalOptions="Start"
                 HorizontalOptions="Fill">
             <VerticalStackLayout Spacing="4">
                 <Label Text="Skipped Folders (due to access issues):"
-                       FontAttributes="Bold"
-                       TextColor="{AppThemeBinding Light=DarkRed, Dark=LightCoral}" />
+                       Style="{StaticResource LogErrorLabel}"
+                       FontAttributes="Bold" />
 
                 <Editor Text="{Binding SkippedPathsLog}"
-                        FontFamily="Consolas"
-                        BackgroundColor="Transparent"
-                        TextColor="{AppThemeBinding Light=DarkRed, Dark=LightCoral}"
+                        Style="{StaticResource LogEditorStyle}"
+                        TextColor="{StaticResource ErrorColor}"
                         AutoSize="TextChanges"
-                        IsReadOnly="True"
                         HeightRequest="120" />
             </VerticalStackLayout>
         </Border>

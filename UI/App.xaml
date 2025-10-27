@@ -7,37 +7,17 @@
     <Application.Resources>
         <ResourceDictionary>
 
-            <!-- 🔁 Opacity Converter -->
+            <!-- 🔁 Converters -->
             <local:BoolToOpacityConverter x:Key="BoolToOpacityConverter"
-                                          TrueOpacity="1.0"
-                                          FalseOpacity="0.4" />
-
+                                      TrueOpacity="1.0"
+                                      FalseOpacity="0.4" />
             <local:InverseBoolConverter x:Key="InverseBoolConverter" />
-
+            <local:CategorySelectionConverter x:Key="CategorySelectionConverter" />
 
             <!-- 🎨 App Theme Resources -->
-
             <ResourceDictionary.MergedDictionaries>
-                <!-- 🎨 Theme and Color System -->
-                <ResourceDictionary Source="Resources/Styles/ThemeColors.xaml" />
-
-                <!-- 🔠 Typography and Layout -->
-                <ResourceDictionary Source="Resources/Styles/FontSizes.xaml" />
-                <ResourceDictionary Source="Resources/Styles/LayoutSpacing.xaml" />
-
-                <!-- 🧱 Component Styles -->
-                <ResourceDictionary Source="Resources/Styles/ButtonStyles.xaml" />
-                <ResourceDictionary Source="Resources/Styles/BorderStyles.xaml" />
-                <ResourceDictionary Source="Resources/Styles/EditorStyles.xaml" />
-                <ResourceDictionary Source="Resources/Styles/LabelStyles.xaml" />
-                <ResourceDictionary Source="Resources/Styles/EntryStyles.xaml" />
-                <ResourceDictionary Source="Resources/Styles/SwitchStyles.xaml" />
-                <ResourceDictionary Source="Resources/Styles/ModalStyles.xaml" />
-                <ResourceDictionary Source="Resources/Styles/SliderStyles.xaml" />
-                <ResourceDictionary>
-                    <local:CategorySelectionConverter x:Key="CategorySelectionConverter" />
-                </ResourceDictionary>
-
+                <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
+                <ResourceDictionary Source="Resources/Styles/AppStyles.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
         </ResourceDictionary>

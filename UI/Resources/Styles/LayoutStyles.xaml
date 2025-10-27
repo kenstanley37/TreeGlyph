@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<?xaml-comp compile="true" ?>
+<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- 📦 Standard Vertical Stack -->
+    <Style x:Key="StandardVerticalStack" TargetType="VerticalStackLayout">
+        <Setter Property="Spacing" Value="16" />
+        <Setter Property="Padding" Value="16" />
+        <Setter Property="HorizontalOptions" Value="Fill" />
+        <Setter Property="VerticalOptions" Value="Fill" />
+    </Style>
+
+    <!-- 🧱 Standard Grid Container -->
+    <Style x:Key="StandardGrid" TargetType="Grid">
+        <Setter Property="Padding" Value="20" />
+        <Setter Property="RowSpacing" Value="12" />
+        <Setter Property="ColumnSpacing" Value="12" />
+        <Setter Property="HorizontalOptions" Value="Fill" />
+        <Setter Property="VerticalOptions" Value="Fill" />
+    </Style>
+
+    <!-- 🧩 Panel Container -->
+    <Style x:Key="PanelContainer" TargetType="Grid">
+        <Setter Property="BackgroundColor" Value="{StaticResource PanelBackground}" />
+        <Setter Property="Padding" Value="12" />
+        <Setter Property="Margin" Value="0,0,12,0" />
+        <Setter Property="HorizontalOptions" Value="Fill" />
+        <Setter Property="VerticalOptions" Value="Fill" />
+    </Style>
+
+    <!-- 🧊 Scrollable Panel -->
+    <Style x:Key="ScrollablePanel" TargetType="ScrollView">
+        <Setter Property="BackgroundColor" Value="{StaticResource PanelBackground}" />
+        <Setter Property="Padding" Value="12" />
+        <Setter Property="Margin" Value="0,0,0,12" />
+        <Setter Property="Orientation" Value="Vertical" />
+        <Setter Property="HorizontalOptions" Value="Fill" />
+        <Setter Property="VerticalOptions" Value="Fill" />
+    </Style>
+
+</ResourceDictionary>

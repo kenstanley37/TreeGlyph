@@ -7,27 +7,44 @@
              x:DataType="vm:ToolbarViewModel">
 
     <Grid HeightRequest="44"
-      Padding="12,0"
-      BackgroundColor="{AppThemeBinding Light=#f5f5f5, Dark=#222222}"
-      ColumnSpacing="12"
-      HorizontalOptions="Fill"
-      ColumnDefinitions="Auto,*,Auto">
+          Padding="12,0"
+          BackgroundColor="{StaticResource PanelBackground}"
+          ColumnSpacing="12"
+          HorizontalOptions="Fill"
+          ColumnDefinitions="Auto,*,Auto">
 
         <!-- 🔧 Navigation Buttons -->
-        <HorizontalStackLayout Grid.Column="0" Spacing="6" VerticalOptions="Center">
-            <Button Text="Browse" Command="{Binding BrowseFolderCommand}" Style="{StaticResource NavButtonStyle}" />
-            <Button Text="Generate" Command="{Binding GenerateTreeAsyncCommand}" Style="{StaticResource NavButtonStyle}" />
-            <Button Text="Save ASCII" Command="{Binding SaveTreeCommand}" Style="{StaticResource NavButtonStyle}" />
-            <Button Text="Clear" Command="{Binding ClearTreeCommand}" Style="{StaticResource NavButtonStyle}" />
-            <Button Text="Save Ignore" Command="{Binding SaveIgnoreFileCommand}" Style="{StaticResource NavButtonStyle}" />
+        <HorizontalStackLayout Grid.Column="0"
+                               Spacing="6"
+                               VerticalOptions="Center">
+            <Button Text="Browse"
+                    Command="{Binding BrowseFolderCommand}"
+                    Style="{StaticResource NavButtonStyle}" />
+            <Button Text="Generate"
+                    Command="{Binding GenerateTreeAsyncCommand}"
+                    Style="{StaticResource NavButtonStyle}" />
+            <Button Text="Save ASCII"
+                    Command="{Binding SaveTreeCommand}"
+                    Style="{StaticResource NavButtonStyle}" />
+            <Button Text="Clear"
+                    Command="{Binding ClearTreeCommand}"
+                    Style="{StaticResource NavButtonStyle}" />
+            <Button Text="Save Ignore"
+                    Command="{Binding SaveIgnoreFileCommand}"
+                    Style="{StaticResource NavButtonStyle}" />
         </HorizontalStackLayout>
 
-
-
         <!-- 📖 About + Logs -->
-        <HorizontalStackLayout Grid.Column="2" HorizontalOptions="End" VerticalOptions="Center" Spacing="6">
-            <Button Text="View Logs" Command="{Binding ViewLogsCommand}" Style="{StaticResource NavButtonStyle}" />
-            <Button Text="About" Command="{Binding ShowAboutCommand}" Style="{StaticResource NavButtonStyle}" />
+        <HorizontalStackLayout Grid.Column="2"
+                               HorizontalOptions="End"
+                               VerticalOptions="Center"
+                               Spacing="6">
+            <Button Text="View Logs"
+                    Command="{Binding ViewLogsCommand}"
+                    Style="{StaticResource NavButtonStyle}" />
+            <Button Text="About"
+                    Command="{Binding ShowAboutCommand}"
+                    Style="{StaticResource NavButtonStyle}" />
         </HorizontalStackLayout>
 
     </Grid>

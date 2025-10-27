@@ -113,60 +113,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <MauiXaml Update="Resources\Styles\BorderStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
-    <MauiXaml Update="Resources\Styles\ButtonStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
-    <MauiXaml Update="Resources\Styles\EditorStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
-    <MauiXaml Update="Resources\Styles\EntryStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
-    <MauiXaml Update="Resources\Styles\FontSizes.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
-    <MauiXaml Update="Resources\Styles\LabelStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
-    <MauiXaml Update="Resources\Styles\LayoutSpacing.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
-    <MauiXaml Update="Resources\Styles\ModalStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
-    <MauiXaml Update="Resources\Styles\Old\Buttons.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
-    <MauiXaml Update="Resources\Styles\Old\Containers.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
-    <MauiXaml Update="Resources\Styles\Old\Indicators.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
-    <MauiXaml Update="Resources\Styles\Old\Inputs.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
-    <MauiXaml Update="Resources\Styles\Old\Pages.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
-    <MauiXaml Update="Resources\Styles\Old\Shadows.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
-    <MauiXaml Update="Resources\Styles\Old\Text.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
-    <MauiXaml Update="Resources\Styles\SliderStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
-    <MauiXaml Update="Resources\Styles\SwitchStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
-    <MauiXaml Update="Resources\Styles\ThemeColors.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
     <MauiXaml Update="Views\AboutPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>

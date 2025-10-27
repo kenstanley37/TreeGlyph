@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using Infrastructure.Services;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
@@ -51,6 +52,14 @@ public partial class LogViewModel : ObservableObject
         }
     }
 
+    private bool isBusy;
+    public bool IsBusy
+    {
+        get => isBusy;
+        set => SetProperty(ref isBusy, value);
+    }
+
+
     private string searchText = string.Empty;
     public string SearchText
     {
@@ -58,13 +67,26 @@ public partial class LogViewModel : ObservableObject
         set => SetProperty(ref searchText, value);
     }
 
+    private string _fullLogText = string.Empty;
+    public string FullLogText
+    {
+        get => _fullLogText;
+        set => SetProperty(ref _fullLogText, value);
+    }
     //public ObservableCollection<string> AvailableKeys { get; } = new();
+    public bool CanLoadLogs => SelectedCategories?.Count > 0;
 
     private ObservableCollection<string> selectedCategories = new();
     public ObservableCollection<string> SelectedCategories
     {
         get => selectedCategories;
-        set => SetProperty(ref selectedCategories, value);
+        set
+        {
+            if (SetProperty(ref selectedCategories, value))
+            {
+                OnPropertyChanged(nameof(CanLoadLogs));
+            }
+        }
     }
 
     public ObservableCollection<string> AvailableCategories { get; } = new()
@@ -122,6 +144,8 @@ public partial class LogViewModel : ObservableObject
             {
                 foreach (var key in AvailableKeys)
                     key.IsSelected = value;
+
+                OnPropertyChanged(nameof(CanLoadLogs));
             }
         }
     }
@@ -140,6 +164,7 @@ public partial class LogViewModel : ObservableObject
     {
         SelectedDate = date;
         AvailableKeys.Clear();
+        SelectedCategories.Clear();
 
         var fileName = $"exclusion-log-{date:yyyy-MM-dd}.txt";
         var filePath = Path.Combine(LogService.LogDirectory, fileName);
@@ -155,57 +180,84 @@ public partial class LogViewModel : ObservableObject
             .Distinct()
             .OrderBy(k => k);
 
-
         foreach (var key in keys)
-            AvailableKeys.Add(new SelectableKeyItem(key));
+        {
+            var item = new SelectableKeyItem(key);
+            item.PropertyChanged += OnKeySelectionChanged;
+            AvailableKeys.Add(item);
+        }
+
+        OnPropertyChanged(nameof(CanLoadLogs));
+    }
+
+    private void OnKeySelectionChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(SelectableKeyItem.IsSelected) &&
+            sender is SelectableKeyItem item)
+        {
+            if (item.IsSelected)
+            {
+                if (!SelectedCategories.Contains(item.Key))
+                    SelectedCategories.Add(item.Key);
+            }
+            else
+            {
+                if (SelectedCategories.Contains(item.Key))
+                    SelectedCategories.Remove(item.Key);
+            }
+
+            OnPropertyChanged(nameof(CanLoadLogs));
+        }
+    }
+
+    private async Task ShowSpinnerWithDelay(Func<Task> action)
+    {
+        var delayTask = Task.Delay(300); // ⏳ delay before showing spinner
+        IsBusy = true;
+
+        var actionTask = action();
+
+        await Task.WhenAny(actionTask, delayTask); // wait for either to finish
+        await actionTask;
+
+        IsBusy = false;
     }
 
     public async Task LoadLogsAsync()
     {
-        var fileName = $"exclusion-log-{SelectedDate:yyyy-MM-dd}.txt";
-        var filePath = Path.Combine(LogService.LogDirectory, fileName);
+        // ⏳ Clear viewer immediately for visual feedback
+        FullLogText = string.Empty;
+        FilteredLogs.Clear();
 
-        List<string> filtered;
-
-        if (!File.Exists(filePath))
+        await ShowSpinnerWithDelay(async () =>
         {
-            filtered = new() { "⚠️ No logs found for selected date." };
-        }
-        else
-        {
-            //var lines = File.ReadAllLines(filePath);
-            var lines = await File.ReadAllLinesAsync(filePath);
-            System.Diagnostics.Debug.WriteLine($"[LoadLogs] Total lines: {lines.Length}");
+            //await Task.Delay(10000); // delay for testing spinner
 
-            filtered = lines
-                .Where(line =>
-                    SelectedCategories?.Count == 0 ||
-                    (SelectedCategories?.Any(cat => line.Contains(cat, StringComparison.OrdinalIgnoreCase)) ?? false))
-                .Where(line =>
-                    string.IsNullOrWhiteSpace(SearchText) ||
-                    line.Contains(SearchText, StringComparison.OrdinalIgnoreCase))
-                .ToList();
+            var fileName = $"exclusion-log-{SelectedDate:yyyy-MM-dd}.txt";
+            var filePath = Path.Combine(LogService.LogDirectory, fileName);
 
-            foreach (var line in lines)
+            List<string> filtered;
+
+            if (!File.Exists(filePath))
             {
-                foreach (var cat in SelectedCategories)
-                {
-                    if (line.Contains(cat, StringComparison.OrdinalIgnoreCase))
-                    {
-                        //DebugLogger.WriteLine($"[Match] Line matched category '{cat}': {line}");
-                    }
-
-                }
+                filtered = new() { "⚠️ No logs found for selected date." };
+            }
+            else
+            {
+                var lines = await File.ReadAllLinesAsync(filePath);
+                filtered = lines
+                    .Where(line =>
+                        SelectedCategories?.Count == 0 ||
+                        (SelectedCategories?.Any(cat => line.Contains(cat, StringComparison.OrdinalIgnoreCase)) ?? false))
+                    .Where(line =>
+                        string.IsNullOrWhiteSpace(SearchText) ||
+                        line.Contains(SearchText, StringComparison.OrdinalIgnoreCase))
+                    .ToList();
             }
 
-
-            //DebugLogger.WriteLine($"[LoadLogs] Categories: {(SelectedCategories == null ? "null" : string.Join(", ", SelectedCategories))}");
-            //DebugLogger.WriteLine($"[LoadLogs] SearchText: {SearchText}");
-            //DebugLogger.WriteLine($"[LoadLogs] Filtered count: {filtered.Count}");
-        }
-
-        FilteredLogs = new ObservableCollection<string>(filtered);
-        OnPropertyChanged(nameof(FilteredLogs));
+            FilteredLogs = new ObservableCollection<string>(filtered);
+            FullLogText = string.Join(Environment.NewLine, filtered);
+        });
     }
 
     public ICommand ToggleCategoryCommand => new RelayCommand<string>(ToggleCategory);
@@ -219,6 +271,6 @@ public partial class LogViewModel : ObservableObject
         else
             SelectedCategories.Add(category);
 
-        //DebugLogger.WriteLine($"[ToggleCategory] SelectedCategories = {string.Join(", ", SelectedCategories)}");
+        OnPropertyChanged(nameof(CanLoadLogs)); // ✅ Notify UI to re-evaluate button state
     }
 }

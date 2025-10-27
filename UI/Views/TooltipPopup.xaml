@@ -5,12 +5,11 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui">
 
-    <Border Background="Black"
+    <Border Background="{StaticResource OverlayBackground}"
             Padding="6"
-            StrokeShape="RoundRectangle 4">
+            StrokeShape="RoundRectangle 4"
+            Stroke="{StaticResource DividerBrush}">
         <Label x:Name="TooltipLabel"
-               TextColor="White"
-               FontSize="12"
-               LineBreakMode="WordWrap" />
+               Style="{StaticResource TooltipLabelStyle}" />
     </Border>
 </views:Popup>

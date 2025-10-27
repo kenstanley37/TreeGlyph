@@ -1,46 +1,56 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<?xaml-comp compile="true" ?>
+<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
-    <!-- 🧭 Navigation Button -->
-    <Style x:Key="NavButtonStyle" TargetType="Button">
-        <Setter Property="FontSize" Value="{StaticResource FontSizeNormal}" />
-        <Setter Property="Padding" Value="10,4" />
+    <!-- 🔵 Primary Action -->
+    <Style x:Key="AccentButton" TargetType="Button">
         <Setter Property="BackgroundColor" Value="{StaticResource AccentColor}" />
         <Setter Property="TextColor" Value="White" />
+        <Setter Property="FontAttributes" Value="Bold" />
         <Setter Property="CornerRadius" Value="6" />
-        <Setter Property="BorderColor" Value="{StaticResource BorderDark}" />
-        <Setter Property="BorderWidth" Value="1" />
-        <Setter Property="HorizontalOptions" Value="End" />
-        <Setter Property="VerticalOptions" Value="Center" />
-
-        <!-- ✅ Visual feedback for disabled state -->
-        <Setter Property="VisualStateManager.VisualStateGroups">
-            <VisualStateGroupList>
-                <VisualStateGroup Name="CommonStates">
-                    <VisualState Name="Normal" />
-                    <VisualState Name="Disabled">
-                        <VisualState.Setters>
-                            <Setter Property="Opacity" Value="0.4" />
-                            <Setter Property="TextColor" Value="{AppThemeBinding Light=Gray, Dark=DarkGray}" />
-                        </VisualState.Setters>
-                    </VisualState>
-                </VisualStateGroup>
-            </VisualStateGroupList>
-        </Setter>
+        <Setter Property="Padding" Value="12,6" />
     </Style>
 
+    <!-- ⚪️ Secondary Action -->
+    <Style x:Key="UtilityButton" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="{StaticResource PanelBackground}" />
+        <Setter Property="TextColor" Value="{StaticResource BaseForeground}" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="Padding" Value="8,4" />
+        <Setter Property="CornerRadius" Value="8" />
+        <Setter Property="BorderColor" Value="{StaticResource DividerColor}" />
+        <Setter Property="BorderWidth" Value="1" />
+    </Style>
 
-    <!-- 🛑 Danger Button -->
-    <Style x:Key="DangerButtonStyle" TargetType="Button">
-        <Setter Property="FontSize" Value="{StaticResource FontSizeNormal}" />
-        <Setter Property="Padding" Value="10,4" />
+    <!-- 🔴 Destructive Action -->
+    <Style x:Key="DangerButton" TargetType="Button">
         <Setter Property="BackgroundColor" Value="{StaticResource ErrorColor}" />
         <Setter Property="TextColor" Value="White" />
+        <Setter Property="FontAttributes" Value="Bold" />
         <Setter Property="CornerRadius" Value="6" />
-        <Setter Property="BorderColor" Value="{StaticResource BorderDark}" />
+        <Setter Property="Padding" Value="12,6" />
+    </Style>
+
+    <!-- 🧊 Icon-Only Button -->
+    <Style x:Key="IconButton" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="TextColor" Value="{StaticResource BaseForeground}" />
+        <Setter Property="Padding" Value="6" />
+        <Setter Property="WidthRequest" Value="32" />
+        <Setter Property="HeightRequest" Value="32" />
+    </Style>
+
+    <!-- 👻 Ghost Button -->
+    <Style x:Key="GhostButton" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="TextColor" Value="{StaticResource AccentColor}" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="Padding" Value="8,4" />
+        <Setter Property="BorderColor" Value="{StaticResource AccentColor}" />
         <Setter Property="BorderWidth" Value="1" />
-        <Setter Property="HorizontalOptions" Value="End" />
-        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="CornerRadius" Value="6" />
     </Style>
 
 </ResourceDictionary>
