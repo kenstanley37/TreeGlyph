@@ -4,7 +4,7 @@ using CommunityToolkit.Mvvm.Input;
 using Infrastructure.Services;
 using System.ComponentModel;
 
-namespace UI.ViewModels.MainPageViewModel;
+namespace TreeGlyph.UI.ViewModels.MainPageViewModel;
 
 public partial class OptionsPanelViewModel : ObservableObject
 {

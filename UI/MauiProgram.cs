@@ -1,13 +1,12 @@
-﻿using Microsoft.Extensions.Logging;
-using UI;
+﻿using TreeGlyph.UI;
 using Core.Services;
-using UI.Services;
+using TreeGlyph.UI.Services;
 using CommunityToolkit.Maui;
-using UI.ViewModels.MainPageViewModel;
-using UI.Platforms.Windows.Services;
+using TreeGlyph.UI.ViewModels.MainPageViewModel;
+using TreeGlyph.UI.Platforms.Windows.Services;
 
 #if WINDOWS
-using UI.Platforms.Windows;
+using TreeGlyph.UI.Platforms.Windows;
 #endif
 
 public static class MauiProgram
@@ -20,7 +19,7 @@ public static class MauiProgram
             .UseMauiApp<App>()
              .ConfigureEffects(effects =>
              {
-                 effects.Add<UI.Effects.HoverCursorEffect, WinUI.Effects.HoverCursorEffectHandler>();
+                 effects.Add<TreeGlyph.UI.Effects.HoverCursorEffect, WinUI.Effects.HoverCursorEffectHandler>();
              })
             .UseMauiCommunityToolkit(options =>
             {
@@ -36,7 +35,7 @@ public static class MauiProgram
 
 
 #if DEBUG
-        builder.Logging.AddDebug();
+        //builder.Logging.AddDebug();
 #endif
 
         builder.Services.AddSingleton<MainViewModel>();

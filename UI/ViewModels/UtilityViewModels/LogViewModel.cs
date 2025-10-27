@@ -6,12 +6,19 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
 
-namespace UI.ViewModels.UtilityViewModels;
+namespace TreeGlyph.UI.ViewModels.UtilityViewModels;
 
 public partial class LogViewModel : ObservableObject
 {
     public ICommand LoadKeysCommand { get; }
     public ICommand LoadLogsCommand { get; }
+
+    private DateTime selectedDate = DateTime.Today;
+    public DateTime SelectedDate
+    {
+        get => selectedDate;
+        set => SetProperty(ref selectedDate, value);
+    }
 
     public LogViewModel()
     {
@@ -19,13 +26,29 @@ public partial class LogViewModel : ObservableObject
         LoadKeysCommand = new RelayCommand<DateTime>(LoadKeysForDate);
         LoadAvailableDates();
 
+        if (AvailableLogDates.Count > 0)
+        {
+            var today = DateTime.Today;
+            var match = AvailableLogDates.FirstOrDefault(d => d.Date.Date == today)
+                     ?? AvailableLogDates.OrderByDescending(d => d.Date).First();
+
+            SelectedLogDate = match;
+            LoadKeysForDate(match.Date);
+        }
     }
 
-    private DateTime selectedDate = DateTime.Today;
-    public DateTime SelectedDate
+    private LogDateItem? selectedLogDate;
+    public LogDateItem? SelectedLogDate
     {
-        get => selectedDate;
-        set => SetProperty(ref selectedDate, value);
+        get => selectedLogDate;
+        set
+        {
+            if (SetProperty(ref selectedLogDate, value) && value != null)
+            {
+                SelectedDate = value.Date;
+                LoadKeysForDate(value.Date);
+            }
+        }
     }
 
     private string searchText = string.Empty;
@@ -65,13 +88,27 @@ public partial class LogViewModel : ObservableObject
 
         var files = Directory.GetFiles(LogService.LogDirectory, "exclusion-log-*.txt");
 
-        foreach (var file in files)
+        var parsedDates = files
+            .Select(file => Path.GetFileNameWithoutExtension(file))
+            .Select(name => name.Replace("exclusion-log-", ""))
+            .Select(raw => DateTime.TryParseExact(raw, "yyyy-MM-dd", null, DateTimeStyles.None, out var date) ? date : (DateTime?)null)
+            .Where(d => d.HasValue)
+            .Select(d => new LogDateItem((DateTime)d!, LoadKeysForDate))
+            .OrderByDescending(d => d.Date)
+            .ToList();
+
+        foreach (var item in parsedDates)
+            AvailableLogDates.Add(item);
+
+        // ✅ Set default selection to today or most recent
+        var today = DateTime.Today;
+        var match = parsedDates.FirstOrDefault(d => d.Date.Date == today)
+                 ?? parsedDates.FirstOrDefault();
+
+        if (match != null)
         {
-            var name = Path.GetFileNameWithoutExtension(file);
-            if (DateTime.TryParseExact(name.Replace("exclusion-log-", ""), "yyyy-MM-dd", null, DateTimeStyles.None, out var date))
-            {
-                AvailableLogDates.Add(new LogDateItem(date, LoadKeysForDate));
-            }
+            SelectedDate = match.Date;
+            LoadKeysForDate(match.Date);
         }
     }
 

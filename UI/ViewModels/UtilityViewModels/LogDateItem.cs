@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using System.Windows.Input;
 
-namespace UI.ViewModels.UtilityViewModels;
+namespace TreeGlyph.UI.ViewModels.UtilityViewModels;
 
 public class LogDateItem
 {

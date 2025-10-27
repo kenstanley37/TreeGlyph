@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace UI.ViewModels.UtilityViewModels;
+namespace TreeGlyph.UI.ViewModels.UtilityViewModels;
 
 public partial class SelectableKeyItem : ObservableObject
 {

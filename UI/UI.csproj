@@ -6,7 +6,8 @@
     <PublisherDisplayName>Kenneth Stanley</PublisherDisplayName>
     <Version>1.0.0.0</Version>
     <GenerateAppInstallerFile>false</GenerateAppInstallerFile>
-	
+	<AssemblyName>TreeGlyph.UI</AssemblyName>
+
 	<!-- Kens Added Stuff to remove warnings -->
 	<GenerateSymbolsPackage>false</GenerateSymbolsPackage>
 	<MauiEnableXamlCBindingWithSourceCompilation>true</MauiEnableXamlCBindingWithSourceCompilation>
@@ -25,7 +26,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <OutputType>Exe</OutputType>
-    <RootNamespace>UI</RootNamespace>
+    <RootNamespace>TreeGlyph.UI</RootNamespace>
 
     <!-- App ID & Versions -->
     <ApplicationId>com.stanleysoft.ui</ApplicationId>
@@ -57,6 +58,11 @@
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
+	
+	<IncludeSymbols>false</IncludeSymbols>
+	<SymbolPackageFormat>none</SymbolPackageFormat>
+	<EnableMsixSymbolPackage>true</EnableMsixSymbolPackage>
+	<MsixSymbolToolPath>C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\Hostx64\x64\mspdbcmf.exe</MsixSymbolToolPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -190,5 +196,6 @@
       <PackagePath>\</PackagePath>
     </None>
   </ItemGroup>
+
 
 </Project>

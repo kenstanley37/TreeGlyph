@@ -1,7 +1,7 @@
-using UI.Services;
-using UI.ViewModels.UtilityViewModels;
+using TreeGlyph.UI.Services;
+using TreeGlyph.UI.ViewModels.UtilityViewModels;
 
-namespace UI.Views;
+namespace TreeGlyph.UI.Views;
 
 public partial class LogViewPage : ContentPage
 {

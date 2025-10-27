@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace UI.Helpers;
+namespace TreeGlyph.UI.Helpers;
 
 public static class CursorHelper
 {

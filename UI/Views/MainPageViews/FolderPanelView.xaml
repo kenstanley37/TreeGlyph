@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:vm="clr-namespace:UI.ViewModels.MainPageViewModel"
-             x:Class="UI.Views.MainPageViews.FolderPanelView"
+             xmlns:vm="clr-namespace:TreeGlyph.UI.ViewModels.MainPageViewModel"
+             x:Class="TreeGlyph.UI.Views.MainPageViews.FolderPanelView"
              x:Name="Root"
              x:DataType="vm:FolderPanelViewModel">
 
@@ -40,23 +40,25 @@
 
         <!-- 📝 Exclude Patterns Editor -->
         <Border StrokeShape="RoundRectangle 6"
-                Stroke="{AppThemeBinding Light=#cccccc, Dark=#444444}"
-                Background="{AppThemeBinding Light=#f9f9f9, Dark=#121212}"
-                Padding="12"
-                Margin="0,4,0,8"
-                HorizontalOptions="Fill"
-                VerticalOptions="Start">
+        Stroke="{AppThemeBinding Light=#cccccc, Dark=#444444}"
+        Background="{AppThemeBinding Light=#f9f9f9, Dark=#121212}"
+        Padding="12"
+        Margin="0,4,0,8"
+        HorizontalOptions="Fill"
+        VerticalOptions="Start">
 
             <Editor Text="{Binding ExclusionsLocal}"
-                    Placeholder="{Binding ExclusionPlaceholder}"
-                    FontFamily="Consolas"
-                    FontSize="14"
-                    AutoSize="Disabled"
-                    IsReadOnly="False"
-                    BackgroundColor="Transparent"
-                    TextColor="{AppThemeBinding Light=Black, Dark=LightGray}"
-                    HorizontalOptions="Fill"
-                    VerticalOptions="Fill" />
+            Placeholder="{Binding ExclusionPlaceholder}"
+            FontFamily="Consolas"
+            FontSize="14"
+            AutoSize="Disabled"
+            IsReadOnly="False"
+            BackgroundColor="Transparent"
+            TextColor="{AppThemeBinding Light=Black, Dark=LightGray}"
+            PlaceholderColor="{AppThemeBinding Light=#999999, Dark=#666666}"
+            HeightRequest="72" 
+            HorizontalOptions="Fill"
+            VerticalOptions="Start" />
         </Border>
 
         <!-- 🌐 Global Ignore Toggle -->
@@ -65,7 +67,7 @@
                    FontSize="14"
                    VerticalOptions="Center"
                    TextColor="{AppThemeBinding Light=Black, Dark=White}" />
-            <Switch IsToggled="{Binding GlobalIgnore.ShouldApplyGlobalIgnore}" />
+            <Switch IsToggled="{Binding IsGlobalIgnoreEnabled}" />
         </VerticalStackLayout>
 
         <!-- 🌐 Global Ignore Trigger -->

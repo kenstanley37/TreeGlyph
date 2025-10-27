@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace UI.ViewModels.MainPageViewModel;
+namespace TreeGlyph.UI.ViewModels.MainPageViewModel;
 
 public partial class TooltipViewModel : ObservableObject
 {

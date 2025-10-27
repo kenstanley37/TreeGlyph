@@ -1,83 +1,118 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:viewmodels="clr-namespace:UI.ViewModels.UtilityViewModels"
-             xmlns:vm="clr-namespace:UI.ViewModels.UtilityViewModels"
+             xmlns:viewmodels="clr-namespace:TreeGlyph.UI.ViewModels.UtilityViewModels"
+             xmlns:vm="clr-namespace:TreeGlyph.UI.ViewModels.UtilityViewModels"
              xmlns:sys="clr-namespace:System;assembly=netstandard"
-             xmlns:models="clr-namespace:UI.ViewModels.UtilityViewModels"
-             x:Class="UI.Views.LogViewPage"
+             xmlns:models="clr-namespace:TreeGlyph.UI.ViewModels.UtilityViewModels"
+             x:Class="TreeGlyph.UI.Views.LogViewPage"
+             Padding="0"
+             Shell.NavBarIsVisible="False"
              x:DataType="viewmodels:LogViewModel">
 
-    <Grid RowDefinitions="Auto,Auto,Auto,Auto,*"  Padding="20" RowSpacing="12">
+    <Grid RowDefinitions="Auto,Auto,*"
+          Padding="20"
+          RowSpacing="12">
 
-        <!-- 📁 Log File Buttons -->
-        <CollectionView Grid.Row="0"
-                ItemsSource="{Binding AvailableLogDates}"
-                SelectionMode="None">
-          <CollectionView.ItemTemplate>
-            <DataTemplate x:DataType="models:LogDateItem">
-              <HorizontalStackLayout HorizontalOptions="Center">
-                <Button Text="{Binding Date, StringFormat='{}{0:MM/dd/yyyy}'}"
-                        Command="{Binding LoadKeysCommand}"
-                        WidthRequest="200"
-                        Margin="0,4"
-                        HorizontalOptions="Center" />
-              </HorizontalStackLayout>
-            </DataTemplate>
-          </CollectionView.ItemTemplate>
-        </CollectionView>
+        <!-- 🔼 Top Section: Controls + Keys -->
+        <Grid Grid.Row="0"
+              ColumnDefinitions="Auto,*"
+              ColumnSpacing="16">
 
-      <HorizontalStackLayout Margin="0,8" HorizontalOptions="Start">
-        <CheckBox x:Name="SelectAllCheckBox"
-                  IsChecked="{Binding IsAllKeysSelected, Mode=TwoWay}"
-                  CheckedChanged="OnSelectAllCheckedChanged" />
-        <Label Text="Select All"
-               VerticalTextAlignment="Center"
-               Margin="6,0,0,0"
-               TextColor="{AppThemeBinding Light=Black, Dark=White}" />
-      </HorizontalStackLayout>
-      
-        <!-- 🧩 Unique Keys from Selected Log -->
-        <FlexLayout Grid.Row="1" Wrap="Wrap" Direction="Row" JustifyContent="Start" AlignItems="Center"
-                    BindableLayout.ItemsSource="{Binding AvailableKeys}">
-            <BindableLayout.ItemTemplate>
-              <DataTemplate x:DataType="models:SelectableKeyItem">
-                <Grid ColumnDefinitions="50,160"
-                      Padding="1"
-                      Margin="1"
-                      BackgroundColor="{Binding BackgroundColor}">
-                  <CheckBox Grid.Column="0"
-                            IsChecked="{Binding IsSelected}"
-                            CheckedChanged="OnCategoryCheckedChanged" />
-                  <Label Grid.Column="1"
-                         Text="{Binding Key}"
-                         TextColor="{AppThemeBinding Light=Black, Dark=White}"
-                         VerticalTextAlignment="Center"
-                         Padding="0"
-                         Margin="2,0,0,0" />
-                </Grid>
-              </DataTemplate>
+            <!-- 🟦 Left Panel: Log Date Picker + Select All -->
+            <VerticalStackLayout Grid.Column="0"
+                                 Spacing="12"
+                                 WidthRequest="260"
+                                 VerticalOptions="Start">
 
-            </BindableLayout.ItemTemplate>
-        </FlexLayout>
+                <Picker Title="Select a log date"
+                        ItemsSource="{Binding AvailableLogDates}"
+                        ItemDisplayBinding="{Binding Date, StringFormat='{}{0:MM/dd/yyyy}'}"
+                        SelectedItem="{Binding SelectedLogDate, Mode=TwoWay}"
+                        WidthRequest="240" />
 
-        <!-- 🔍 Search -->
-        <SearchBar Grid.Row="2" Placeholder="Search logs..." Text="{Binding SearchText}" />
+                <HorizontalStackLayout>
+                    <CheckBox x:Name="SelectAllCheckBox"
+                              IsChecked="{Binding IsAllKeysSelected, Mode=TwoWay}"
+                              CheckedChanged="OnSelectAllCheckedChanged" />
+                    <Label Text="Select All"
+                           VerticalTextAlignment="Center"
+                           Margin="6,0,0,0"
+                           TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+                </HorizontalStackLayout>
 
-        <!-- 📥 Load Logs -->
-        <Button Grid.Row="3" Text="Load Logs" Command="{Binding LoadLogsCommand}" />
+                <SearchBar Placeholder="Search logs..."
+                           Text="{Binding SearchText}"
+                           WidthRequest="240" />
 
-        <!-- 📄 Filtered Log Output -->
-        <CollectionView Grid.Row="4" ItemsSource="{Binding FilteredLogs}" VerticalOptions="Fill">
+                <Button Text="Load Logs"
+                        Command="{Binding LoadLogsCommand}"
+                        WidthRequest="240" />
+            </VerticalStackLayout>
+
+            <!-- 🟨 Right Panel: Unique Keys from Selected Log -->
+            <ScrollView Grid.Column="1"
+                        Orientation="Vertical"
+                        Padding="0"
+                        Margin="0">
+
+                <FlexLayout Wrap="Wrap"
+                            Direction="Row"
+                            JustifyContent="Start"
+                            AlignItems="Start"
+                            BindableLayout.ItemsSource="{Binding AvailableKeys}">
+
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="models:SelectableKeyItem">
+                            <Grid ColumnDefinitions="50,160"
+                                  Padding="0"
+                                  Margin="2,2,2,0"
+                                  BackgroundColor="{Binding BackgroundColor}">
+
+                                <CheckBox Grid.Column="0"
+                                          IsChecked="{Binding IsSelected}"
+                                          CheckedChanged="OnCategoryCheckedChanged"
+                                          Margin="0" />
+
+                                <Label Grid.Column="1"
+                                       Text="{Binding Key}"
+                                       TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                                       VerticalTextAlignment="Center"
+                                       Padding="0"
+                                       Margin="2,0,0,0" />
+                            </Grid>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </FlexLayout>
+            </ScrollView>
+        </Grid>
+
+        <!-- 🔳 Divider -->
+        <BoxView Grid.Row="1"
+                 Grid.ColumnSpan="2"
+                 HeightRequest="1"
+                 BackgroundColor="{AppThemeBinding Light=#CCC, Dark=#444}"
+                 Margin="0,6" />
+
+        <!-- 🔽 Bottom Section: Filtered Log Output -->
+        <CollectionView Grid.Row="2"
+                ItemsSource="{Binding FilteredLogs}"
+                BackgroundColor="#000"
+                VerticalOptions="Fill">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="x:String">
-                    <Label Text="{Binding}"
-                           FontFamily="Consolas"
-                           FontSize="12"
-                           TextColor="{AppThemeBinding Light=Black, Dark=White}"
-                           LineBreakMode="WordWrap" />
+                    <Editor Text="{Binding}"
+                            FontFamily="Consolas"
+                            FontSize="12"
+                            TextColor="{AppThemeBinding Light=White, Dark=White}"
+                            BackgroundColor="Transparent"
+                            IsReadOnly="True"
+                            AutoSize="TextChanges"
+                            Margin="0"
+                             />
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
+
 
     </Grid>
 </ContentPage>

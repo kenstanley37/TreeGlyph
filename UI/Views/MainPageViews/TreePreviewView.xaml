@@ -1,7 +1,7 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:vm="clr-namespace:UI.ViewModels.MainPageViewModel"
-             x:Class="UI.Views.MainPageViews.TreePreviewView"
+             xmlns:vm="clr-namespace:TreeGlyph.UI.ViewModels.MainPageViewModel"
+             x:Class="TreeGlyph.UI.Views.MainPageViews.TreePreviewView"
              x:Name="Root"
              x:DataType="vm:TreePreviewViewModel">
 

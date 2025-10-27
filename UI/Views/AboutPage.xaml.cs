@@ -1,4 +1,4 @@
-namespace UI.Views;
+namespace TreeGlyph.UI.Views;
 
 public partial class AboutPage : ContentPage
 {

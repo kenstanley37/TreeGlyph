@@ -1,4 +1,4 @@
-﻿namespace UI.Controls;
+﻿namespace TreeGlyph.UI.Controls;
 
 public class HorizontalSplitterView : Grid
 {

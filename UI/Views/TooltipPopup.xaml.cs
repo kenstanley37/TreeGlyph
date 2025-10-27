@@ -1,6 +1,6 @@
 using CommunityToolkit.Maui.Views;
 
-namespace UI.Views;
+namespace TreeGlyph.UI.Views;
 
 public partial class TooltipPopup : Popup
 {

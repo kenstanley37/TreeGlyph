@@ -1,9 +1,9 @@
 ﻿using System.Collections.ObjectModel;
 using System.Globalization;
-using UI.Services;
-using UI.ViewModels.UtilityViewModels;
+using TreeGlyph.UI.Services;
+using TreeGlyph.UI.ViewModels.UtilityViewModels;
 
-namespace UI.Converters;
+namespace TreeGlyph.UI.Converters;
 
 public class CategorySelectionConverter : IValueConverter
 {
