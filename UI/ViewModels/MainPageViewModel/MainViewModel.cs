@@ -8,13 +8,13 @@ using Infrastructure.Services;
 using Microsoft.UI.Xaml;
 using System.Diagnostics;
 using System.Windows.Input;
-using UI.Services;
-using UI.Views;
+using TreeGlyph.UI.Services;
+using TreeGlyph.UI.Views;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using WinRT.Interop;
 
-namespace UI.ViewModels.MainPageViewModel;
+namespace TreeGlyph.UI.ViewModels.MainPageViewModel;
 
 public partial class MainViewModel : ObservableObject
 {
@@ -24,9 +24,9 @@ public partial class MainViewModel : ObservableObject
     private readonly DispatcherTimer timer;
 
     public OptionsPanelViewModel OptionsPanel { get; } = new();
-    public GlobalIgnoreViewModel GlobalIgnore { get; }
+    public GlobalIgnoreViewModel GlobalIgnore { get; } = new();
     public TooltipViewModel Tooltip { get; }
-    public FolderPanelViewModel FolderPanel { get; } = new();
+    public FolderPanelViewModel FolderPanel { get; }
     public ToolbarViewModel Toolbar { get; } = new();
     public TreePreviewViewModel TreePreview { get; } = new();
 
@@ -42,7 +42,7 @@ public partial class MainViewModel : ObservableObject
         OptionsPanel = new OptionsPanelViewModel();
         GlobalIgnore = new GlobalIgnoreViewModel();
         Tooltip = new TooltipViewModel();
-        FolderPanel = new FolderPanelViewModel();
+        FolderPanel = new FolderPanelViewModel(GlobalIgnore);
         Toolbar = new ToolbarViewModel();
         TreePreview = new TreePreviewViewModel();
 
@@ -67,7 +67,6 @@ public partial class MainViewModel : ObservableObject
         // Setup commands
         GenerateTreeAsyncCommand = new AsyncRelayCommand(GenerateTreeAsync);
     }
-
 
     private bool isBusy;
     public bool IsBusy
@@ -321,12 +320,16 @@ public partial class MainViewModel : ObservableObject
             LogService.Write("TREEGEN", $"Starting tree build for: {SelectedFolderPath}");
 
             // 🧾 Load global ignore rules
-            var globalRules = GlobalIgnore.ShouldApplyGlobalIgnore
-                ? GlobalIgnore.GlobalIgnoreExclusions
+            var globalRules = Array.Empty<string>();
+
+            if (GlobalIgnore.ShouldApplyGlobalIgnore)
+            {
+                globalRules = GlobalIgnore.GlobalIgnoreExclusions
                     .Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries)
                     .Select(line => line.Trim())
                     .Where(line => !string.IsNullOrWhiteSpace(line) && !line.StartsWith("#"))
-                : Array.Empty<string>();
+                    .ToArray();
+            }
 
             LogService.Write("TREEGEN", $"Global ignore enabled: {GlobalIgnore.ShouldApplyGlobalIgnore}");
 

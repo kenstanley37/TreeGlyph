@@ -3,7 +3,7 @@ using Core.Services;
 using Windows.Storage.Pickers; // For FolderPicker
 using WinRT.Interop;           // For InitializeWithWindow
 
-namespace UI.Services;
+namespace TreeGlyph.UI.Services;
 
 public class DefaultFolderPickerService : IFolderPickerService
 {

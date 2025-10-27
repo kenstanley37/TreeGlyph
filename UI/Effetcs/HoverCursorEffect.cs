@@ -1,4 +1,4 @@
-﻿namespace UI.Effects;
+﻿namespace TreeGlyph.UI.Effects;
 
 public class HoverCursorEffect : RoutingEffect
 {

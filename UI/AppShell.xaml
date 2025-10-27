@@ -1,23 +1,33 @@
-<?xml version="1.0" encoding="UTF-8" ?>
 <Shell
-    x:Class="UI.AppShell"
+    x:Class="TreeGlyph.UI.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:views="clr-namespace:UI.Views"
-    xmlns:mainviews="clr-namespace:UI.Views.MainPageViews"
-    Title="TreeGlyph">
+    xmlns:views="clr-namespace:TreeGlyph.UI.Views"
+    xmlns:mainviews="clr-namespace:TreeGlyph.UI.Views.MainPageViews"
+    Title="TreeGlyph"
+    FlyoutBackgroundColor="{AppThemeBinding Light=White, Dark=#111}"
+    FlyoutBehavior="Flyout"
+    BackgroundColor="{StaticResource BaseBackground}"
+    TitleColor="{StaticResource BaseForeground}"
+    UnselectedColor="{StaticResource MutedForeground}"
+    >
 
-    <ShellContent
-        ContentTemplate="{DataTemplate mainviews:MainPage}"
-        Route="MainPage" />
+    <Shell.Resources>
+        <Style TargetType="Label">
+            <Setter Property="TextColor" Value="{AppThemeBinding Light=Black, Dark=White}" />
+        </Style>
+    </Shell.Resources>
 
-        <ShellContent
-        ContentTemplate="{DataTemplate views:AboutPage}"
-        Route="AboutPage" />
+    <FlyoutItem Title="Main" Icon="main_icon.png">
+        <ShellContent ContentTemplate="{DataTemplate mainviews:MainPage}" Route="MainPage" />
+    </FlyoutItem>
 
-        <ShellContent
-        ContentTemplate="{DataTemplate views:LogViewPage}"
-        Route="LogViewPage" />
+    <FlyoutItem Title="About" Icon="about_icon.png">
+        <ShellContent ContentTemplate="{DataTemplate views:AboutPage}" Route="AboutPage" />
+    </FlyoutItem>
 
+    <FlyoutItem Title="Logs" Icon="logs_icon.png">
+        <ShellContent ContentTemplate="{DataTemplate views:LogViewPage}" Route="LogViewPage" />
+    </FlyoutItem>
 
 </Shell>

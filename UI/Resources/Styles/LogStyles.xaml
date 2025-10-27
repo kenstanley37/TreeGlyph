@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<?xaml-comp compile="true" ?>
+<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- 📝 Log Viewer Editor -->
+    <Style x:Key="LogEditorStyle" TargetType="Editor">
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="FontFamily" Value="Consolas" />
+        <Setter Property="TextColor" Value="{StaticResource BaseForeground}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="IsReadOnly" Value="True" />
+        <Setter Property="AutoSize" Value="Disabled" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="VerticalOptions" Value="FillAndExpand" />
+        <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+    </Style>
+
+    <!-- ⏱ Timestamp Label -->
+    <Style x:Key="LogTimestampLabel" TargetType="Label">
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="TextColor" Value="{StaticResource MutedForeground}" />
+        <Setter Property="FontFamily" Value="Consolas" />
+    </Style>
+
+    <!-- 🔵 Info Log -->
+    <Style x:Key="LogInfoLabel" TargetType="Label">
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="TextColor" Value="{StaticResource BaseForeground}" />
+        <Setter Property="FontFamily" Value="Consolas" />
+    </Style>
+
+    <!-- 🟡 Warning Log -->
+    <Style x:Key="LogWarningLabel" TargetType="Label">
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="TextColor" Value="{StaticResource WarningColor}" />
+        <Setter Property="FontFamily" Value="Consolas" />
+    </Style>
+
+    <!-- 🔴 Error Log -->
+    <Style x:Key="LogErrorLabel" TargetType="Label">
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="TextColor" Value="{StaticResource ErrorColor}" />
+        <Setter Property="FontFamily" Value="Consolas" />
+    </Style>
+
+</ResourceDictionary>

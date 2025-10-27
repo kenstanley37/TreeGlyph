@@ -1,29 +1,49 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<?xaml-comp compile="true" ?>
+<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
-    <!-- 🟦 Default Border Style -->
-    <Style x:Key="DefaultBorderStyle" TargetType="Border">
-        <Setter Property="Stroke" Value="{StaticResource BorderDark}" />
+    <!-- 🟦 Default Panel Border -->
+    <Style x:Key="PanelBorder" TargetType="Border">
+        <Setter Property="Stroke" Value="{StaticResource DividerColor}" />
+        <Setter Property="StrokeThickness" Value="1" />
         <Setter Property="StrokeShape">
             <Setter.Value>
                 <RoundRectangle CornerRadius="6" />
             </Setter.Value>
         </Setter>
-        <Setter Property="StrokeThickness" Value="1" />
-        <Setter Property="Padding" Value="6" />
+        <Setter Property="BackgroundColor" Value="{StaticResource PanelBackground}" />
+        <Setter Property="Padding" Value="12" />
+        <Setter Property="Margin" Value="0,4,0,8" />
     </Style>
 
-    <!-- ⚠️ Error Border Style -->
-    <Style x:Key="ErrorBorderStyle" TargetType="Border">
-        <Setter Property="Stroke" Value="{StaticResource ErrorColor}" />
+    <!-- 🧊 Modal Border -->
+    <Style x:Key="ModalBorder" TargetType="Border">
+        <Setter Property="Stroke" Value="{StaticResource AccentColor}" />
+        <Setter Property="StrokeThickness" Value="2" />
+        <Setter Property="StrokeShape">
+            <Setter.Value>
+                <RoundRectangle CornerRadius="8" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="BackgroundColor" Value="{StaticResource OverlayBackground}" />
+        <Setter Property="Padding" Value="16" />
+        <Setter Property="Margin" Value="12" />
+    </Style>
+
+    <!-- 📝 Editor Container -->
+    <Style x:Key="EditorBorder" TargetType="Border">
+        <Setter Property="Stroke" Value="{StaticResource DividerColor}" />
+        <Setter Property="StrokeThickness" Value="1" />
         <Setter Property="StrokeShape">
             <Setter.Value>
                 <RoundRectangle CornerRadius="6" />
             </Setter.Value>
         </Setter>
-        <Setter Property="StrokeThickness" Value="1.5" />
-        <Setter Property="Background" Value="{StaticResource WarningColor}" />
-        <Setter Property="Padding" Value="6" />
+        <Setter Property="BackgroundColor" Value="{StaticResource EditorBackground}" />
+        <Setter Property="Padding" Value="12" />
+        <Setter Property="Margin" Value="0,4,0,8" />
     </Style>
 
 </ResourceDictionary>

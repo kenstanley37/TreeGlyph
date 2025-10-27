@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.Windows.Input;
 
-namespace UI.ViewModels.MainPageViewModel;
+namespace TreeGlyph.UI.ViewModels.MainPageViewModel;
 
 public partial class ToolbarViewModel : ObservableObject
 {

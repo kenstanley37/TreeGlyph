@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<?xaml-comp compile="true" ?>
+<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- 🧭 Headings -->
+    <Style x:Key="Heading1" TargetType="Label">
+        <Setter Property="FontSize" Value="20" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="TextColor" Value="{StaticResource BaseForeground}" />
+    </Style>
+
+    <Style x:Key="Heading2" TargetType="Label">
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="TextColor" Value="{StaticResource BaseForeground}" />
+    </Style>
+
+    <Style x:Key="Heading3" TargetType="Label">
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="TextColor" Value="{StaticResource BaseForeground}" />
+    </Style>
+
+    <!-- 📄 Body Text -->
+    <Style x:Key="BodyText" TargetType="Label">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="TextColor" Value="{StaticResource BaseForeground}" />
+    </Style>
+
+    <!-- 📝 Caption -->
+    <Style x:Key="CaptionText" TargetType="Label">
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="TextColor" Value="{StaticResource MutedForeground}" />
+    </Style>
+
+    <!-- 🔍 Placeholder -->
+    <Style x:Key="PlaceholderText" TargetType="Label">
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="TextColor" Value="{StaticResource PlaceholderText}" />
+        <Setter Property="FontAttributes" Value="Italic" />
+    </Style>
+
+    <!-- 🧮 Monospace -->
+    <Style x:Key="MonospaceText" TargetType="Label">
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="FontFamily" Value="Consolas" />
+        <Setter Property="TextColor" Value="{StaticResource BaseForeground}" />
+    </Style>
+
+</ResourceDictionary>

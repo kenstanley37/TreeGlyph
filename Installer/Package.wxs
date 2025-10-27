@@ -1,0 +1,6 @@
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Package Id="StanleySoft.TreeGlyph" Name="TreeGlyph Folder Mapper"
+           Manufacturer="StanleySoft" Version="1.0.1">
+    <File Source="D:\Code-Projects\TreeGlyph\Console\bin\Release\net9.0\publish\treeglyph.exe" KeyPath="yes" />
+  </Package>
+</Wix>

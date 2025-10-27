@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace UI.Converters
+namespace TreeGlyph.UI.Converters
 {
     public class BoolToOpacityConverter : IValueConverter
     {

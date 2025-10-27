@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<?xaml-comp compile="true" ?>
+<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- 🔽 Standard Picker -->
+    <Style x:Key="StandardPicker" TargetType="Picker">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="TextColor" Value="{StaticResource BaseForeground}" />
+        <Setter Property="BackgroundColor" Value="{StaticResource PanelBackground}" />
+        <Setter Property="TitleColor" Value="{StaticResource MutedForeground}" />
+        <Setter Property="Margin" Value="0,4,0,8" />
+        <Setter Property="HeightRequest" Value="40" />
+        <Setter Property="HorizontalOptions" Value="Fill" />
+    </Style>
+
+    <!-- 🧪 Diagnostic Picker -->
+    <Style x:Key="DiagnosticPicker" TargetType="Picker">
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="TextColor" Value="{StaticResource WarningColor}" />
+        <Setter Property="BackgroundColor" Value="{StaticResource PanelBackground}" />
+        <Setter Property="TitleColor" Value="{StaticResource MutedForeground}" />
+        <Setter Property="Margin" Value="0,4,0,8" />
+        <Setter Property="HeightRequest" Value="36" />
+        <Setter Property="HorizontalOptions" Value="Fill" />
+    </Style>
+
+</ResourceDictionary>

@@ -1,6 +1,6 @@
-using UI.ViewModels.MainPageViewModel;
+using TreeGlyph.UI.ViewModels.MainPageViewModel;
 
-namespace UI.Views.MainPageViews;
+namespace TreeGlyph.UI.Views.MainPageViews;
 
 public partial class OptionsDrawerView : ContentView
 {

@@ -1,61 +1,62 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="UI.Views.AboutPage"
-             Title="About TreeGlyph">
+             x:Class="TreeGlyph.UI.Views.AboutPage"
+             Title="About TreeGlyph"
+             BackgroundColor="{StaticResource BaseBackground}">
+
     <ScrollView>
         <VerticalStackLayout Padding="24" Spacing="16">
 
+            <!-- 🌲 App Name -->
             <Label Text="🌲 TreeGlyph"
-             FontSize="32"
-             FontAttributes="Bold"
-             HorizontalTextAlignment="Center" />
+                   Style="{StaticResource AppTitle}" />
 
             <Label Text="Version 1.0"
-             FontSize="14"
-             HorizontalTextAlignment="Center" />
+                   Style="{StaticResource CaptionText}"
+                   HorizontalTextAlignment="Center" />
 
-            <BoxView HeightRequest="1" Color="Gray" />
+            <BoxView HeightRequest="1"
+                     BackgroundColor="{StaticResource DividerColor}" />
 
+            <!-- 📘 What Is TreeGlyph -->
             <Label Text="📘 What Is TreeGlyph?"
-             FontSize="20"
-             FontAttributes="Bold" />
+                   Style="{StaticResource SectionHeader}" />
 
             <Label Text="TreeGlyph is a developer-focused utility that converts folder structures into clean, readable ASCII trees. Designed for clarity, portability, and precision — whether you’re documenting a project, cleaning up a repo, or crafting a .gitignore by hand."
-             FontSize="14"
-             LineBreakMode="WordWrap" />
+                   Style="{StaticResource BodyText}"
+                   LineBreakMode="WordWrap" />
 
+            <!-- 🧭 How to Use It -->
             <Label Text="🧭 How to Use It"
-             FontSize="20"
-             FontAttributes="Bold" />
+                   Style="{StaticResource SectionHeader}" />
 
             <Label Text="• Select a folder\n• View and customize exclusions\n• Preview the tree structure\n• Copy or save the output\n• Export a .gitignore file if needed"
-             FontSize="14"
-             LineBreakMode="WordWrap" />
+                   Style="{StaticResource BodyText}"
+                   LineBreakMode="WordWrap" />
 
-            <Label Text="💡 Tips &amp; Tricks"
-             FontSize="20"
-             FontAttributes="Bold" />
+            <!-- 💡 Tips & Tricks -->
+            <Label Text="💡 Tips and Tricks"
+                   Style="{StaticResource SectionHeader}" />
 
             <Label Text="• Hover over folder names to see full paths\n• Use the splitter to resize the preview and source panel\n• Edits in the exclusion box instantly refresh the preview\n• Copy to clipboard with one tap — it's Markdown-safe"
-             FontSize="14"
-             LineBreakMode="WordWrap" />
+                   Style="{StaticResource BodyText}"
+                   LineBreakMode="WordWrap" />
 
-            <BoxView HeightRequest="1" Color="Gray" />
+            <BoxView HeightRequest="1"
+                     BackgroundColor="{StaticResource DividerColor}" />
 
+            <!-- 🔧 Built With -->
             <Label Text="🔧 Built With"
-             FontSize="16"
-             FontAttributes="Bold" />
+                   Style="{StaticResource SubsectionHeader}" />
 
             <Label Text=".NET MAUI • Windows App SDK • MVVM Toolkit • Custom Controls"
-             FontSize="14"
-             HorizontalTextAlignment="Center" />
+                   Style="{StaticResource CaptionText}"
+                   HorizontalTextAlignment="Center" />
 
             <Label Text="Made by Kenneth Stanley — StanleySoft"
-             FontSize="12"
-             FontAttributes="Italic"
-             HorizontalTextAlignment="Center" />
+                   Style="{StaticResource FooterNote}"
+                   HorizontalTextAlignment="Center" />
 
         </VerticalStackLayout>
-
     </ScrollView>
 </ContentPage>

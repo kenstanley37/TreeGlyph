@@ -1,9 +1,9 @@
 ﻿#if WINDOWS
-using UI.Services;
+using TreeGlyph.UI.Services;
 using Windows.Storage.Pickers;
 using WinRT.Interop;
 
-namespace UI.Platforms.Windows;
+namespace TreeGlyph.UI.Platforms.Windows;
 
 public class FileSaveService : IFileSaveService
 {

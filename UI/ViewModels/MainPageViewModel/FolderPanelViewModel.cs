@@ -2,10 +2,16 @@
 using CommunityToolkit.Mvvm.Input;
 using Infrastructure.Services;
 
-namespace UI.ViewModels.MainPageViewModel;
+namespace TreeGlyph.UI.ViewModels.MainPageViewModel;
 
 public partial class FolderPanelViewModel : ObservableObject
 {
+
+    public FolderPanelViewModel(GlobalIgnoreViewModel globalIgnore)
+    {
+        GlobalIgnore = globalIgnore;
+    }
+
     private MainViewModel? parent;
     public MainViewModel? Parent
     {
@@ -68,7 +74,13 @@ public partial class FolderPanelViewModel : ObservableObject
         set => SetProperty(ref hasSelectedFolder, value);
     }
 
-    public GlobalIgnoreViewModel GlobalIgnore { get; } = new();
+    public bool IsGlobalIgnoreEnabled
+    {
+        get => GlobalIgnore.IsGlobalIgnoreEnabled;
+        set => GlobalIgnore.IsGlobalIgnoreEnabled = value;
+    }
+
+    public GlobalIgnoreViewModel GlobalIgnore { get; }
 
     [RelayCommand]
     private async Task ShowExclusionInfo()
@@ -91,5 +103,6 @@ public partial class FolderPanelViewModel : ObservableObject
     }
 
     public string ExclusionPlaceholder =>
-        "node_modules/\n*.log\nbin/\nobj/";
+    "# Type your exclusion patterns here\n# Examples:\n# node_modules/\n# *.log\n# bin/\n# obj/";
+
 }

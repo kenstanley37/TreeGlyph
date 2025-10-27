@@ -2,11 +2,14 @@
 using CommunityToolkit.Mvvm.Input;
 using Infrastructure.Services;
 
-namespace UI.ViewModels.MainPageViewModel;
+namespace TreeGlyph.UI.ViewModels.MainPageViewModel;
 
 public partial class GlobalIgnoreViewModel : ObservableObject
 {
     public MainViewModel? Parent { get; set; }
+
+    private const string PreferenceKey = nameof(ShouldApplyGlobalIgnore);
+    private bool isInitializing = true;
 
     private string globalIgnoreExclusions = string.Empty;
     public string GlobalIgnoreExclusions
@@ -22,7 +25,21 @@ public partial class GlobalIgnoreViewModel : ObservableObject
         set => SetProperty(ref isEditingGlobalIgnore, value);
     }
 
-    private bool shouldApplyGlobalIgnore = Preferences.Get(nameof(ShouldApplyGlobalIgnore), false);
+    public bool IsGlobalIgnoreEnabled
+    {
+        get
+        {
+            LogService.Write("GLOBAL-IGNORE", $"Switch state read: {ShouldApplyGlobalIgnore}");
+            return ShouldApplyGlobalIgnore;
+        }
+        set
+        {
+            LogService.Write("GLOBAL-IGNORE", $"Switch state changed by user: {value}");
+            ShouldApplyGlobalIgnore = value;
+        }
+    }
+
+    private bool shouldApplyGlobalIgnore;
     public bool ShouldApplyGlobalIgnore
     {
         get => shouldApplyGlobalIgnore;
@@ -30,8 +47,15 @@ public partial class GlobalIgnoreViewModel : ObservableObject
         {
             if (SetProperty(ref shouldApplyGlobalIgnore, value))
             {
-                Preferences.Set(nameof(ShouldApplyGlobalIgnore), value);
-                LogService.Write("GLOBAL-IGNORE", $"Toggle persisted: {value}");
+                if (!isInitializing)
+                {
+                    Preferences.Set(PreferenceKey, value);
+                    LogService.Write("GLOBAL-IGNORE", $"Toggle persisted: {value}");
+                }
+                else
+                {
+                    LogService.Write("GLOBAL-IGNORE", $"Toggle loaded during init: {value}");
+                }
             }
         }
     }
@@ -45,8 +69,12 @@ public partial class GlobalIgnoreViewModel : ObservableObject
 
     public GlobalIgnoreViewModel()
     {
-        IsEditingGlobalIgnore = false; // 🔒 Start hidden
+        isInitializing = true;
+        IsEditingGlobalIgnore = false;
+        ShouldApplyGlobalIgnore = Preferences.Get(PreferenceKey, false);
+        LogService.Write("GLOBAL-IGNORE", $"Toggle loaded: {ShouldApplyGlobalIgnore}");
         LoadGlobalIgnoreFile();
+        isInitializing = false;
     }
 
     private void LoadGlobalIgnoreFile()
@@ -63,8 +91,7 @@ public partial class GlobalIgnoreViewModel : ObservableObject
 
             if (!string.IsNullOrWhiteSpace(GlobalIgnoreExclusions))
             {
-                ShouldApplyGlobalIgnore = true;
-                LogService.Write("GLOBAL-IGNORE", "Auto-applied global ignore rules.");
+                LogService.Write("GLOBAL-IGNORE", $"Global ignore file has content ({GlobalIgnoreExclusions.Length} chars).");
             }
         }
         else

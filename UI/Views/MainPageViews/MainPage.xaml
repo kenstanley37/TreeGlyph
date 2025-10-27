@@ -1,92 +1,102 @@
 ﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:controls="clr-namespace:UI.Controls;assembly=UI"
-             xmlns:views="clr-namespace:UI.Views.MainPageViews"
-             xmlns:vm="clr-namespace:UI.ViewModels.MainPageViewModel"
-             x:Class="UI.Views.MainPageViews.MainPage"
+             xmlns:controls="clr-namespace:TreeGlyph.UI.Controls;assembly=TreeGlyph.UI"
+             xmlns:views="clr-namespace:TreeGlyph.UI.Views.MainPageViews"
+             xmlns:vm="clr-namespace:TreeGlyph.UI.ViewModels.MainPageViewModel"
+             x:Class="TreeGlyph.UI.Views.MainPageViews.MainPage"
              x:DataType="vm:MainViewModel"
-             BackgroundColor="{AppThemeBinding Light=White, Dark=Black}">
+             BackgroundColor="{StaticResource BaseBackground}">
 
-    <Grid RowDefinitions="Auto,*">
+    <Grid RowDefinitions="Auto,*"
+          Padding="20"
+          RowSpacing="12">
 
         <!-- 🔧 Toolbar + Status -->
-        <VerticalStackLayout Grid.Row="0" Spacing="8" Padding="16,12,16,8">
+        <VerticalStackLayout Grid.Row="0"
+                             Spacing="12"
+                             Padding="0,0,0,12">
 
-            <!-- 🛠 Toolbar -->
             <views:ToolbarView ViewModel="{Binding Toolbar}" />
 
-            <!-- ⏱ Status Panel -->
-            <Border IsVisible="{Binding IsBusy}"
-                    Stroke="{AppThemeBinding Light=#ccc, Dark=#444}"
-                    StrokeShape="RoundRectangle 6"
-                    BackgroundColor="{AppThemeBinding Light=#f5f5f5, Dark=#1c1c1c}"
-                    Padding="12"
-                    Margin="0,4,0,0">
+            <!-- 🟦 Status Panel -->
+            <Grid IsVisible="{Binding IsBusy}"
+                  Style="{StaticResource PanelContainer}"
+                  RowDefinitions="Auto,*"
+                  Margin="0,4,0,0">
 
-                <VerticalStackLayout Spacing="6">
+                <VerticalStackLayout Grid.Row="1"
+                                     Spacing="8">
 
                     <Label Text="Building tree..."
+                           Style="{StaticResource CaptionText}"
                            FontAttributes="Italic"
-                           FontSize="13"
-                           TextColor="{AppThemeBinding Light=Gray, Dark=LightGray}"
                            HorizontalOptions="Center" />
 
-                    <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="12">
+                    <Grid ColumnDefinitions="*,Auto"
+                          ColumnSpacing="12">
 
-                        <!-- 📊 Progress Bar -->
                         <ProgressBar Grid.Column="0"
                                      Progress="{Binding Progress}"
-                                     HeightRequest="6"
-                                     BackgroundColor="{AppThemeBinding Light=#ddd, Dark=#333}"
-                                     HorizontalOptions="Fill"
-                                     VerticalOptions="Center" />
+                                     Style="{StaticResource StandardProgressBar}" />
 
-                        <!-- ❌ Cancel Button -->
-                        <Button Grid.Column="2"
+                        <Button Grid.Column="1"
                                 Text="Cancel"
                                 Command="{Binding CancelTreeBuildCommand}"
-                                Style="{StaticResource NavButtonStyle}"
-                                VerticalOptions="Center"
-                                Padding="10,4" />
+                                Style="{StaticResource AccentButton}"
+                                Padding="10,4"
+                                VerticalOptions="Center" />
                     </Grid>
-
                 </VerticalStackLayout>
-            </Border>
-
+            </Grid>
         </VerticalStackLayout>
 
         <!-- 🧩 Main Layout -->
-        <controls:HorizontalSplitterView Grid.Row="1">
+        <Grid Grid.Row="1"
+              ColumnDefinitions="Auto,*,Auto"
+              ColumnSpacing="12"
+              HorizontalOptions="Fill"
+              VerticalOptions="Fill">
 
-            <controls:HorizontalSplitterView.Panel1Content>
-                <Grid HorizontalOptions="Fill">
-                    <views:FolderPanelView ViewModel="{Binding FolderPanel}" />
-                </Grid>
-            </controls:HorizontalSplitterView.Panel1Content>
+            <!-- 📁 Panel 1: Folder View -->
+            <Grid Grid.Column="0"
+                  Style="{StaticResource PanelContainer}"
+                  RowDefinitions="Auto,*"
+                  WidthRequest="360"
+                  HorizontalOptions="Start"
+                  VerticalOptions="Fill">
 
+                <views:FolderPanelView Grid.Row="1"
+                                       ViewModel="{Binding FolderPanel}"
+                                       HorizontalOptions="Fill"
+                                       VerticalOptions="Fill" />
+            </Grid>
 
-            <controls:HorizontalSplitterView.Panel2Content>
-                <Grid ColumnDefinitions="2*,1*"
-                      ColumnSpacing="16"
-                      Padding="16"
-                      HorizontalOptions="Fill"
-                      VerticalOptions="Fill">
+            <!-- 🌲 Panel 2: Tree Preview -->
+            <Grid Grid.Column="1"
+                  Style="{StaticResource PanelContainer}"
+                  RowDefinitions="Auto,*"
+                  HorizontalOptions="Fill"
+                  VerticalOptions="Fill">
 
-                    <!-- 🌲 Tree Preview -->
-                    <Grid Grid.Column="0" HorizontalOptions="Fill" VerticalOptions="Fill">
-                        <views:TreePreviewView ViewModel="{Binding TreePreview}" HorizontalOptions="Fill" VerticalOptions="Fill" />
-                    </Grid>
+                <views:TreePreviewView Grid.Row="1"
+                                       ViewModel="{Binding TreePreview}"
+                                       HorizontalOptions="Fill"
+                                       VerticalOptions="Fill" />
+            </Grid>
 
-                    <!-- ⚙️ Options Panel -->
-                    <Grid Grid.Column="1" HorizontalOptions="Fill" VerticalOptions="Fill">
-                        <views:OptionsDrawerView ViewModel="{Binding OptionsPanel}" HorizontalOptions="Fill" VerticalOptions="Fill" />
-                    </Grid>
+            <!-- ⚙️ Panel 3: Options Drawer -->
+            <Grid Grid.Column="2"
+                  Style="{StaticResource PanelContainer}"
+                  RowDefinitions="Auto,*"
+                  WidthRequest="320"
+                  HorizontalOptions="End"
+                  VerticalOptions="Fill">
 
-                </Grid>
-            </controls:HorizontalSplitterView.Panel2Content>
-
-        </controls:HorizontalSplitterView>
-
+                <views:OptionsDrawerView Grid.Row="1"
+                                         ViewModel="{Binding OptionsPanel}"
+                                         HorizontalOptions="Fill"
+                                         VerticalOptions="Fill" />
+            </Grid>
+        </Grid>
     </Grid>
-
 </ContentPage>

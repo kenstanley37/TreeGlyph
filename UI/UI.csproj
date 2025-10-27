@@ -6,12 +6,19 @@
     <PublisherDisplayName>Kenneth Stanley</PublisherDisplayName>
     <Version>1.0.0.0</Version>
     <GenerateAppInstallerFile>false</GenerateAppInstallerFile>
+	<AssemblyName>TreeGlyph.UI</AssemblyName>
+
+	<!-- Kens Added Stuff to remove warnings -->
+	<GenerateSymbolsPackage>false</GenerateSymbolsPackage>
+	<MauiEnableXamlCBindingWithSourceCompilation>true</MauiEnableXamlCBindingWithSourceCompilation>
+
 
     <!-- Framework & Runtime -->
-    <TargetFrameworks>net9.0-windows10.0.19041.0</TargetFrameworks>
-    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
-    <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <TargetFramework>net9.0-windows10.0.19041.0</TargetFramework>
+	<RuntimeIdentifier>win-x64</RuntimeIdentifier>
+	<WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
+	<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+
 
     <!-- MAUI -->
     <UseMaui>true</UseMaui>
@@ -19,7 +26,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <OutputType>Exe</OutputType>
-    <RootNamespace>UI</RootNamespace>
+    <RootNamespace>TreeGlyph.UI</RootNamespace>
 
     <!-- App ID & Versions -->
     <ApplicationId>com.stanleysoft.ui</ApplicationId>
@@ -51,6 +58,11 @@
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
+	
+	<IncludeSymbols>false</IncludeSymbols>
+	<SymbolPackageFormat>none</SymbolPackageFormat>
+	<EnableMsixSymbolPackage>true</EnableMsixSymbolPackage>
+	<MsixSymbolToolPath>C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\Hostx64\x64\mspdbcmf.exe</MsixSymbolToolPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -101,60 +113,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <MauiXaml Update="Resources\Styles\BorderStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
-    <MauiXaml Update="Resources\Styles\ButtonStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
-    <MauiXaml Update="Resources\Styles\EditorStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
-    <MauiXaml Update="Resources\Styles\EntryStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
-    <MauiXaml Update="Resources\Styles\FontSizes.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
-    <MauiXaml Update="Resources\Styles\LabelStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
-    <MauiXaml Update="Resources\Styles\LayoutSpacing.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
-    <MauiXaml Update="Resources\Styles\ModalStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
-    <MauiXaml Update="Resources\Styles\Old\Buttons.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
-    <MauiXaml Update="Resources\Styles\Old\Containers.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
-    <MauiXaml Update="Resources\Styles\Old\Indicators.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
-    <MauiXaml Update="Resources\Styles\Old\Inputs.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
-    <MauiXaml Update="Resources\Styles\Old\Pages.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
-    <MauiXaml Update="Resources\Styles\Old\Shadows.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
-    <MauiXaml Update="Resources\Styles\Old\Text.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
-    <MauiXaml Update="Resources\Styles\SliderStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
-    <MauiXaml Update="Resources\Styles\SwitchStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
-    <MauiXaml Update="Resources\Styles\ThemeColors.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
     <MauiXaml Update="Views\AboutPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
@@ -184,5 +142,6 @@
       <PackagePath>\</PackagePath>
     </None>
   </ItemGroup>
+
 
 </Project>

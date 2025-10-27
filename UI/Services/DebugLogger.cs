@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace UI.Services;
+namespace TreeGlyph.UI.Services;
 
 public static class DebugLogger
 {

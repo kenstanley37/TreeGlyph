@@ -1,7 +1,7 @@
-﻿using UI.Views;
-using UI.Views.MainPageViews;
+﻿using TreeGlyph.UI.Views;
+using TreeGlyph.UI.Views.MainPageViews;
 
-namespace UI;
+namespace TreeGlyph.UI;
 
 public partial class AppShell : Shell
 {

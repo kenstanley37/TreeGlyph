@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:vm="clr-namespace:UI.ViewModels.MainPageViewModel"
-             x:Class="UI.Views.MainPageViews.OptionsDrawerView"
+             xmlns:vm="clr-namespace:TreeGlyph.UI.ViewModels.MainPageViewModel"
+             x:Class="TreeGlyph.UI.Views.MainPageViews.OptionsDrawerView"
              x:Name="Root"
              x:DataType="vm:OptionsPanelViewModel"
              Padding="0">
 
-
     <!-- ⚙️ Options Panel -->
-    <Border BackgroundColor="{AppThemeBinding Light=#f0f0f0, Dark=#1a1a1a}"
-            Stroke="{AppThemeBinding Light=Gray, Dark=DarkGray}"
+    <Border BackgroundColor="{StaticResource PanelBackground}"
+            Stroke="{StaticResource DividerBrush}"
             StrokeShape="RoundRectangle 8"
             Padding="12"
             VerticalOptions="Fill"
@@ -24,37 +23,30 @@
             <!-- 📏 Max Depth -->
             <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
                 <Label Text="Max Depth:"
-                       FontSize="14"
-                       TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+                       Style="{StaticResource BodyText}" />
 
                 <Label Text="(i)"
                        FontSize="14"
                        FontAttributes="Bold"
-                       TextColor="{AppThemeBinding Light=#007aff, Dark=#66ccff}"
-                       VerticalOptions="Center"
-                       Margin="0,0,0,0">
+                       TextColor="{StaticResource AccentColor}"
+                       VerticalOptions="Center">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding ShowMaxDepthInfoCommand}" />
                     </Label.GestureRecognizers>
                 </Label>
             </HorizontalStackLayout>
 
-
-
             <Slider Minimum="1"
                     Maximum="99"
                     Value="{Binding MaxDepth}" />
 
             <Label Text="{Binding MaxDepth, StringFormat='Max Depth: {0}'}"
-                   FontSize="14"
-                   TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+                   Style="{StaticResource BodyText}" />
 
             <!-- 💾 Auto Save Toggle -->
             <HorizontalStackLayout VerticalOptions="Center" Spacing="6">
                 <Label Text="Auto-Save"
-                       FontSize="12"
-                       VerticalOptions="Center"
-                       TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+                       Style="{StaticResource CaptionText}" />
 
                 <Image Source="info_icon.png"
                        WidthRequest="16"
@@ -66,15 +58,11 @@
                 </Image>
 
                 <Switch IsToggled="{Binding AutoSaveIgnoreFile}"
-                        
-                        OnColor="{AppThemeBinding Light=#4caf50, Dark=#80e27e}"
-                        ThumbColor="{AppThemeBinding Light=White, Dark=LightGray}"
-                        VerticalOptions="Center" />
+                        Style="{StaticResource StandardSwitch}" />
             </HorizontalStackLayout>
 
             <!-- Add more settings here -->
 
         </VerticalStackLayout>
     </Border>
-
 </ContentView>
