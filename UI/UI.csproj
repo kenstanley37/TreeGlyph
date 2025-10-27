@@ -6,7 +6,8 @@
     <PublisherDisplayName>Kenneth Stanley</PublisherDisplayName>
     <Version>1.0.0.0</Version>
     <GenerateAppInstallerFile>false</GenerateAppInstallerFile>
-	<AssemblyName>TreeGlyph.UI</AssemblyName>
+	  <AssemblyName>TreeGlyph.UI</AssemblyName>
+    <Win32Icon>Resources\AppIcon\treeglyph_icon.ico</Win32Icon>
 
 	<!-- Kens Added Stuff to remove warnings -->
 	<GenerateSymbolsPackage>false</GenerateSymbolsPackage>
@@ -47,7 +48,7 @@
     <Title>TreeGlyph</Title>
     <Description>Folder Mapper that outputs in ACSII format</Description>
     <Copyright>StanleySoft</Copyright>
-    <PackageIcon>TreeGlyph AppIcon.pn.png</PackageIcon>
+    <PackageIcon>treegyph_icon.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/kenstanley37/TreeGlyph</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
@@ -138,6 +139,10 @@
 
   <ItemGroup>
     <None Update="Platforms\Windows\Images\Assets\TreeGlyph AppIcon.pn.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Update="Resources\AppIcon\treegyph_icon.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
